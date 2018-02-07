@@ -1,6 +1,12 @@
 #ifndef MMAZE_MELANGEUR_HPP
 #define MMAZE_MELANGEUR_HPP
 
+#include <cstdlib>
+#include <ctime>
+#include <cstring>
+#include <vector>
+#include <iostream>
+
 namespace MMaze {
 
   class Melangeur {
@@ -13,7 +19,9 @@ namespace MMaze {
       void vider();
       int taille();
 
-    /* vos membres ici */
+      int taille_elt;
+      int nb_elt;
+      std::vector<void*> vec;
 
   };
 
