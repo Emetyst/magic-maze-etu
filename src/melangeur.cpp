@@ -5,6 +5,8 @@ namespace MMaze {
   Melangeur::Melangeur(int octets) {
     taille_elt = octets;
     nb_elt = 0;
+    graine = std::chrono::system_clock::now().time_since_epoch().count();
+    generateur = std::default_random_engine (graine);
   }
 
   Melangeur::~Melangeur() {
