@@ -5,6 +5,7 @@
 #include <ctime>
 #include <cstring>
 #include <vector>
+#include <random>
 #include <iostream>
 
 namespace MMaze {
@@ -22,6 +23,7 @@ namespace MMaze {
       int taille_elt;
       int nb_elt;
       std::vector<void*> vec;
+      std::default_random_engine generateur;
 
   };
 

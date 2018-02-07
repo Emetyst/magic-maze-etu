@@ -18,8 +18,8 @@ namespace MMaze {
   }
 
   void Melangeur::retirer(void* elem) {
-    std::srand(std::time(nullptr));
-    int aleatoire = std::rand() % nb_elt;
+    std::uniform_int_distribution<int> distribution(0,nb_elt-1);
+    int aleatoire = distribution(generateur);
     std::memcpy(elem, vec[aleatoire], taille_elt);
     free(vec[aleatoire]);
     vec.erase(vec.begin() + aleatoire);
