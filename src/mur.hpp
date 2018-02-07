@@ -16,35 +16,35 @@ namespace MMaze {
  * +---+---+---+---+
  */
 
-class Mur {
+  class Mur {
 
-  public :
+    public:
 
-    //construction a partir des deux cases adjacentes
-    Mur(Case c0, Case c1) ;
+      //construction a partir des deux cases adjacentes
+      Mur(Case c0, Case c1);
 
-    //construction implicite a partir d'un entier dans [0,23], voir ci-dessus
-    explicit Mur(unsigned int index) ;
+      //construction implicite a partir d'un entier dans [0,23], voir ci-dessus
+      explicit Mur(unsigned int index);
 
-    //conversion implicite vers un entier dans [0,23], voir ci-dessus
-    unsigned int index() const ;
+      //conversion implicite vers un entier dans [0,23], voir ci-dessus
+      unsigned int index() const;
 
-    //comparaison de murs
-    bool operator==(Mur rhs) const ;
+      //comparaison de murs
+      bool operator==(Mur rhs) const;
 
-    //cases adjacentes
-    //  * 0 : gauche ou haut
-    //  * 1 : droite ou bas
-    Case operator[](unsigned int i) const ;
+      //cases adjacentes
+      //  * 0 : gauche ou haut
+      //  * 1 : droite ou bas
+      Case operator[](unsigned int i) const;
 
-    //rotation
-    Mur tourne(int rotation) const ;
+      //rotation
+      Mur tourne(int rotation) const;
 
-  private :
+    private:
 
-    //stockage sous forme d'un entier, voir ci-dessus
-    unsigned int index_ ;
-} ;
+      //stockage sous forme d'un entier, voir ci-dessus
+      unsigned int index_;
+  };
 
 } //end of namespace MMaze
 

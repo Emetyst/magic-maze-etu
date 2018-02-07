@@ -4,27 +4,27 @@
 #include <cassert>
 #include <cstdlib>
 
-using namespace MMaze ;
+using namespace MMaze;
 
 void test_taille() {
   //test des tailles : ce test verifie que l'evolution de la taille du
   //melangeur est correcte au fur et a mesure des insertions et retraits
-  Melangeur m(sizeof(int)) ;
-  int size = 1000 ;
+  Melangeur m(sizeof(int));
+  int size = 1000;
   for(int i = 0; i < size; ++i) {
-    m.inserer(&i) ;
-    assert(m.taille() == i+1) ;
+    m.inserer(&i);
+    assert(m.taille() == i+1);
   }
-  int iterations = 1000000 ;
-  int elem ;
+  int iterations = 1000000;
+  int elem;
   for(int i = 0; i < iterations; ++i) {
-    int t = m.taille() ;
+    int t = m.taille();
     if(t > 0 && (rand() % 2)) {
-      m.retirer(&elem) ;
-      assert(m.taille() == t - 1) ;
+      m.retirer(&elem);
+      assert(m.taille() == t - 1);
     } else {
-      m.inserer(&i) ;
-      assert(m.taille() == t + 1) ;
+      m.inserer(&i);
+      assert(m.taille() == t + 1);
     }
   }
 }
@@ -34,23 +34,23 @@ void test_melange() {
   //size-1 dans les melanges. Le test est correct si le ratio obtenu a la fin
   //est proche de 0.5 car les deux elements ont autant de chances d'etre dans un
   //ordre que dans l'autre.
-  Melangeur m(sizeof(int)) ;
-  int size = 1000 ;
-  int iterations = 10000 ;
-  int permutation_count = 0 ;
-  int elem ;
+  Melangeur m(sizeof(int));
+  int size = 1000;
+  int iterations = 10000;
+  int permutation_count = 0;
+  int elem;
   for(int iter = 0; iter < iterations; ++iter) {
     for(int i = 0; i < size; ++i) {
-      m.inserer(&i) ;
+      m.inserer(&i);
     }
-    bool notfound = true ;
+    bool notfound = true;
     for(int i = 0; i < size; ++i) {
-      m.retirer(&elem) ;
+      m.retirer(&elem);
       if(notfound && elem == 0) {
-        ++ permutation_count ;
+        ++ permutation_count;
       }
       if(elem == size - 1) {
-        notfound = false ;
+        notfound = false;
       }
     }
   }
@@ -58,30 +58,30 @@ void test_melange() {
   std::cout 
     << "ratio de melange : " 
     << (double) permutation_count / (double) iterations 
-    << std::endl ;
+    << std::endl;
 }
 
 void test_permutation() {
   //le test suivant verifie que tous les elements fournis en entree ressortent
   //si on les retire tous. un message d'erreur s'affichera si certains elements
   //sortants du melangeur ne sont pas dans la bonne plage de valeurs ()
-  Melangeur m(sizeof(int)) ;
-  const int size = 1000 ;
-  bool found[size] = {0} ;
-  int elem ;
+  Melangeur m(sizeof(int));
+  const int size = 1000;
+  bool found[size] = {0};
+  int elem;
   for(int i = 0; i < size; ++i) {
-    m.inserer(&i) ;
+    m.inserer(&i);
   }
   for(int i = 0; i < size; ++i) {
-    m.retirer(&elem) ;
-    assert(elem >= 0 && elem < size) ;
-    found[elem] = true ;
+    m.retirer(&elem);
+    assert(elem >= 0 && elem < size);
+    found[elem] = true;
   }
   for(int i = 0; i < size; ++i) {
     if(!found[i]) {
       std::cout 
         << "erreur : le melange n'a pas retourne toutes les valeurs" 
-        << std::endl ;
+        << std::endl;
     }
   }
 }
@@ -91,27 +91,27 @@ void test_insertion_retrait() {
   //chances de sortir, meme apres des insertions et retraits. Normalement a la
   //fin, tous les elements sont sortis a peu pres autant de fois les uns que
   //les autres, et le minimum et maximum d'apparitions sont proches de
-  //iterations / size ;
-  Melangeur m(sizeof(int)) ;
-  const int size = 1000 ;
-  int iterations = 10000 ;
-  int out_counts[size] ;
-  int elem ;
+  //iterations / size;
+  Melangeur m(sizeof(int));
+  const int size = 1000;
+  int iterations = 10000;
+  int out_counts[size];
+  int elem;
   for(int i = 0; i < size; ++i) {
-    m.inserer(&i) ;
-    out_counts[i] = 0 ;
+    m.inserer(&i);
+    out_counts[i] = 0;
   }
   for(int iter = 0; iter < iterations; ++iter) {
-    m.retirer(&elem) ;
-    m.inserer(&elem) ;
-    assert(elem >= 0 && elem < size) ;
-    ++out_counts[elem] ;
+    m.retirer(&elem);
+    m.inserer(&elem);
+    assert(elem >= 0 && elem < size);
+    ++out_counts[elem];
   }
-  int min = out_counts[0] ;
-  int max = min ;
+  int min = out_counts[0];
+  int max = min;
   for(int i = 1; i < size; ++i) {
-    min = out_counts[i] < min ? out_counts[i] : min ;
-    max = out_counts[i] > max ? out_counts[i] : max ;
+    min = out_counts[i] < min ? out_counts[i] : min;
+    max = out_counts[i] > max ? out_counts[i] : max;
   }
 
   std::cout
@@ -119,15 +119,15 @@ void test_insertion_retrait() {
     << "maximum d'apparitions : " << max << std::endl
     << "nombre d'apparitions souhaitable : " 
     << (double) iterations / (double) size 
-    << std::endl ;
+    << std::endl;
 }
 
 int main() {
 
-  test_taille() ;
-  test_melange() ;
-  test_permutation() ;
-  test_insertion_retrait() ;
+  test_taille();
+  test_melange();
+  test_permutation();
+  test_insertion_retrait();
 
-  return 0 ;
+  return 0;
 }

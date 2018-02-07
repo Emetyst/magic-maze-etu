@@ -3,25 +3,19 @@
 
 namespace MMaze {
 
-class Melangeur {
+  class Melangeur {
 
-  public :
+    public:
+      Melangeur(int octets);
+      ~Melangeur();
+      void inserer(const void* elem);
+      void retirer(void* elem);
+      void vider();
+      int taille();
 
-    Melangeur(int octets) ;
+    /* vos membres ici */
 
-    ~Melangeur() ;
-
-    void inserer(const void* elem) ;
-
-    void retirer(void* elem) ;
-
-    void vider() ;
-
-    int taille() ;
-
-  /* vos membres ici */
-
-} ;
+  };
 
 } //end of namespace MMaze
 

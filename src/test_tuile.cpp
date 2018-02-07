@@ -5,12 +5,12 @@
 #include <iostream>
 #include <cstdlib>
 
-using namespace MMaze ;
+using namespace MMaze;
 
 int main() {
 
-  Tuile t ;
-  std::cout << t << std::endl ;
+  Tuile t;
+  std::cout << t << std::endl;
 
   //utilisation des couleurs
   std::cout
@@ -24,7 +24,7 @@ int main() {
     << BG_VERT << "&"
     << BG_VIOLET << "&"
     << TXT_CLEAR
-    << std::endl ;
+    << std::endl;
 
-  return 0 ;
+  return 0;
 }

@@ -9,27 +9,25 @@
 
 namespace MMaze {
 
-class Tuile {
+  class Tuile {
 
-  public :
+    public:
+      Tuile();
 
-    Tuile() ;
+      //indique si deux cases voisines sont separees par un mur
+      bool mur(Mur m) const;
 
-    //indique si deux cases voisines sont separees par un mur
-    bool mur(Mur m) const ;
+      //indique si une case est accessible depuis les portes ou non
+      bool accessible(Case c) const;
 
-    //indique si une case est accessible depuis les portes ou non
-    bool accessible(Case c) const ;
+      //affichage
+      friend std::ostream& operator<<(std::ostream& out, const Tuile& t);
 
-    //affichage
-    friend std::ostream& operator<<(std::ostream& out, const Tuile& t) ;
-
-  private :
-
-    //affichage
-    void afficher_horizontal(std::ostream& out, unsigned int i) const ;
-    void afficher_vertical(std::ostream& out, unsigned int i) const ;
-} ;
+    private:
+      //affichage
+      void afficher_horizontal(std::ostream& out, unsigned int i) const;
+      void afficher_vertical(std::ostream& out, unsigned int i) const;
+  };
 
 } //end of namespace MMaze
 
