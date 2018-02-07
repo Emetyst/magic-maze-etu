@@ -1,13 +1,10 @@
 #ifndef MMAZE_MELANGEUR_HPP
 #define MMAZE_MELANGEUR_HPP
 
-#include <cstdlib>
-#include <ctime>
 #include <cstring>
 #include <vector>
 #include <random>
 #include <chrono>
-#include <iostream>
 
 namespace MMaze {
 
