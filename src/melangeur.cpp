@@ -24,7 +24,8 @@ namespace MMaze {
     int aleatoire = distribution(generateur);
     std::memcpy(elem, vec[aleatoire], taille_elt);
     free(vec[aleatoire]);
-    vec.erase(vec.begin() + aleatoire);
+    vec[aleatoire] = vec.back();
+    vec.pop_back();
     nb_elt--;
   }
 
