@@ -33,6 +33,8 @@ namespace MMaze {
     for (unsigned int i = 0; i < vec.size(); i++) {
       free(vec[i]);
     }
+    vec.clear();
+    nb_elt = 0;
   }
 
   int Melangeur::taille() {
