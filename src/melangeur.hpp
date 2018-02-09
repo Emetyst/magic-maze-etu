@@ -21,7 +21,8 @@ namespace MMaze {
       int taille_elt;
       int nb_elt;
       std::vector<void*> vec;
-      
+
+    private:
       unsigned graine;
       std::default_random_engine generateur;
 
