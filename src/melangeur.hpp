@@ -19,7 +19,6 @@ namespace MMaze {
       int taille();
 
       int taille_elt;
-      int nb_elt;
       std::vector<void*> vec;
 
     private:
