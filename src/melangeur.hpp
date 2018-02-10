@@ -18,10 +18,9 @@ namespace MMaze {
       void vider();
       int taille();
 
-      int taille_elt;
-      std::vector<void*> vec;
-
     private:
+      std::vector<void*> vec;
+      int taille_elt;
       unsigned graine;
       std::default_random_engine generateur;
 
