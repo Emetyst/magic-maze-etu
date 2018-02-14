@@ -8,16 +8,16 @@ cache:
 melangeur-build:
   stage: build
   script:
-    - cd Src
+    - cd src
     - make test_melangeur
   artifacts:
     paths:
-      - Src/test_melangeur
+      - src/test_melangeur
 
 melangeur-test:
   stage: test
   script:
-    - valgrind --leak-check=full --error-exitcode=1 Src/test_melangeur
+    - valgrind --leak-check=full --error-exitcode=1 src/test_melangeur
   dependencies:
     - melangeur-build
 
@@ -26,15 +26,15 @@ melangeur-test:
 tuile-build:
   stage: build
   script:
-    - cd Src
+    - cd src
     - make test_tuile
   artifacts:
     paths:
-      - Src/test_tuile
+      - src/test_tuile
 
 tuile-test:
   stage: test
   script:
-    - valgrind --leak-check=full --error-exitcode=1 Src/test_tuile
+    - valgrind --leak-check=full --error-exitcode=1 src/test_tuile
   dependencies:
     - tuile-build
