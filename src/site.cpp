@@ -3,11 +3,11 @@
 #include <iostream>
 
 namespace MMaze {
-    Site::Site(unsigned int l, unsigned int c) : Case(l, c) {
-
+    Site::Site(unsigned int li, unsigned int col, Couleur c, Type t) : Case(li, col) {
+        
     }
     
-    Site::Site(unsigned int index) : Case(index) {
-        
+    Site::Site(unsigned int index, Couleur c, Type t) : Case(index) {
+
     }
 }
