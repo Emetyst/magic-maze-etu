@@ -14,7 +14,9 @@ namespace MMaze {
       Melangeur(int octets);
       ~Melangeur();
       void inserer(const void* elem);
+      void inserer(const std::vector<void*> & v_elem);
       void retirer(void* elem);
+      void* retirer();
       void vider();
       int taille();
 

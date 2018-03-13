@@ -2,6 +2,9 @@
 #define MMAZE_TUILE_HPP
 
 #include "case.hpp"
+#include "melangeur.hpp"
+#include "couleurs.hpp"
+#include "site.hpp"
 #include "mur.hpp"
 
 #include <vector>
@@ -12,7 +15,7 @@ namespace MMaze {
   class Tuile {
 
     public:
-      Tuile();
+      Tuile(bool depart = false);
 
       //indique si deux cases voisines sont separees par un mur
       bool mur(Mur m) const;
@@ -24,6 +27,12 @@ namespace MMaze {
       friend std::ostream& operator<<(std::ostream& out, const Tuile& t);
 
     private:
+      std::vector<Site> tab_sites;
+      Melangeur* couleurs_portes;
+
+
+
+
       //affichage
       void afficher_horizontal(std::ostream& out, unsigned int i) const;
       void afficher_vertical(std::ostream& out, unsigned int i) const;
