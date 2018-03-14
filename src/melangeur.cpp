@@ -39,6 +39,7 @@ namespace MMaze {
     void* elem = vec[aleatoire];
     vec[aleatoire] = vec.back();
     vec.pop_back();
+    return elem;
   }
 
   void Melangeur::vider() {
