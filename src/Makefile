@@ -10,6 +10,9 @@ SOURCES += couleurs.cpp
 SOURCES += tuile.cpp
 SOURCES += direction.cpp
 SOURCES += site.cpp
+SOURCES += graphe.cpp
+SOURCES += noeud.cpp
+SOURCES += arete.cpp
 
 OBJECTS = $(SOURCES:.cpp=.o)
 
