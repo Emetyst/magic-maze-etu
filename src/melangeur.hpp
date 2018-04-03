@@ -5,6 +5,7 @@
 #include <vector>
 #include <random>
 #include <chrono>
+#include <iostream>
 
 namespace MMaze {
 
@@ -16,7 +17,6 @@ namespace MMaze {
       void inserer(const void* elem);
       void inserer(const std::vector<void*> & v_elem);
       void retirer(void* elem);
-      void* retirer();
       void vider();
       int taille();
 

@@ -1,4 +1,5 @@
-
+src/test_melangeur
+src/test_tuile
 \.vscode/
 *.d
 *.o

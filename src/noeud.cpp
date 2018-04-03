@@ -1,9 +1,11 @@
 #include "noeud.hpp"
 
-Noeud::Noeud(int num_case) {
-    valeur = num_case;
-}
+namespace MMaze {
+    Noeud::Noeud() {
+        
+    }
 
-Noeud::~Noeud() {
+    Noeud::~Noeud() {
 
+    }
 }

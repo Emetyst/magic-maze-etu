@@ -5,11 +5,11 @@
 
 namespace MMaze {
     class Plateau {
-        private:
+        public:
 			Plateau();
 			~Plateau();
 
-        public:
+        private:
 			Melangeur* pioche_tuiles;
     };
 }

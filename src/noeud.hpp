@@ -6,10 +6,10 @@
 namespace MMaze {
     class Noeud {
         public:
-            Noeud(int num_case);
+            Noeud();
             ~Noeud();
         private:
-            int valeur;
+            void* data;
     };
 }
 

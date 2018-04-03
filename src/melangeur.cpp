@@ -22,7 +22,6 @@ namespace MMaze {
       inserer(v_elem[i]);
     }
   }
-  
 
   void Melangeur::retirer(void* elem) {
     std::uniform_int_distribution<int> distribution(0, taille()-1);
@@ -31,15 +30,6 @@ namespace MMaze {
     free(vec[aleatoire]);
     vec[aleatoire] = vec.back();
     vec.pop_back();
-  }
-
-  void* Melangeur::retirer() {
-    std::uniform_int_distribution<int> distribution(0, taille()-1);
-    int aleatoire = distribution(generateur);
-    void* elem = vec[aleatoire];
-    vec[aleatoire] = vec.back();
-    vec.pop_back();
-    return elem;
   }
 
   void Melangeur::vider() {

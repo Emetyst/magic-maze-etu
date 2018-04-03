@@ -2,6 +2,9 @@
 #define GRAPHE_HPP
 
 #include "arete.hpp"
+#include "noeud.hpp"
+
+#include <vector>
 
 namespace MMaze {
     class Graphe {
@@ -9,7 +12,8 @@ namespace MMaze {
             Graphe();
             ~Graphe();
         private:
-            Noeud* racine;
+            std::vector<Noeud*> nodes;
+            std::vector<Arete*> edges;
     };
 }
 

@@ -7,6 +7,7 @@
 using namespace MMaze;
 
 void test_taille() {
+  std::cout << "Test taille" << std::endl;
   //test des tailles : ce test verifie que l'evolution de la taille du
   //melangeur est correcte au fur et a mesure des insertions et retraits
   Melangeur m(sizeof(int));
@@ -30,6 +31,7 @@ void test_taille() {
 }
 
 void test_melange() {
+  std::cout << "Test mélange" << std::endl;
   //le test suivant compte combien de fois l'element 0 sort avant l'element
   //size-1 dans les melanges. Le test est correct si le ratio obtenu a la fin
   //est proche de 0.5 car les deux elements ont autant de chances d'etre dans un
@@ -62,6 +64,7 @@ void test_melange() {
 }
 
 void test_permutation() {
+  std::cout << "Test permutation" << std::endl;
   //le test suivant verifie que tous les elements fournis en entree ressortent
   //si on les retire tous. un message d'erreur s'affichera si certains elements
   //sortants du melangeur ne sont pas dans la bonne plage de valeurs ()
@@ -87,6 +90,7 @@ void test_permutation() {
 }
 
 void test_insertion_retrait() {
+  std::cout << "Test insertion-retrait" << std::endl;
   //le test verifie que chaque element present dans le melangeur a autant de
   //chances de sortir, meme apres des insertions et retraits. Normalement a la
   //fin, tous les elements sont sortis a peu pres autant de fois les uns que

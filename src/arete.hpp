@@ -1,7 +1,7 @@
 #ifndef ARETE_HPP
 #define ARETE_HPP
 
-#include "arete.hpp"
+#include "noeud.hpp"
 
 namespace MMaze {
     class Arete {

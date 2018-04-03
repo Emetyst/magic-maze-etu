@@ -1,9 +1,11 @@
 #include "graphe.hpp"
 
-Graphe::Graphe() {
+namespace MMaze {
+    Graphe::Graphe() {
 
-}
+    }
 
-Graphe::~Graphe() {
-    delete racine;
+    Graphe::~Graphe() {
+        
+    }
 }
