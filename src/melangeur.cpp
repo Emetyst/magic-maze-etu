@@ -17,6 +17,12 @@ namespace MMaze {
     std::memcpy(vec.back(), elem, taille_elt);
   }
 
+  void Melangeur::inserer(const std::vector<void*> & v_elem) {
+    for (unsigned int i = 0; i < v_elem.size(); i++) {
+      inserer(v_elem[i]);
+    }
+  }
+
   void Melangeur::retirer(void* elem) {
     std::uniform_int_distribution<int> distribution(0, taille()-1);
     int aleatoire = distribution(generateur);

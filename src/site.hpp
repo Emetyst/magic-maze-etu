@@ -14,11 +14,10 @@ namespace MMaze {
     };
 
     class Site : public Case {
-        private:
+        public:
             Type type;
             Couleur couleur;
 
-        public:
             Site(unsigned int li, unsigned int col, Couleur c = AUCUNE, Type t = AUCUN);
             explicit Site(unsigned int index, Couleur c, Type t);
     };

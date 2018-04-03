@@ -1,6 +1,7 @@
 #include "tuile.hpp"
 #include "melangeur.hpp"
 #include "couleurs.hpp"
+#include "plateau.hpp"
 
 #include <iostream>
 #include <cstdlib>
@@ -25,6 +26,10 @@ int main() {
     << BG_VIOLET << "&"
     << TXT_CLEAR
     << std::endl;
+  
+  t.save_to_file("./test_ecriture_tuile.txt");
+
+  Plateau p;
 
   return 0;
 }
