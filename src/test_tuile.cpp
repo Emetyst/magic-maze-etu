@@ -29,7 +29,7 @@ int main() {
   
   t.save_to_file("./test_ecriture_tuile.txt");
 
-  Plateau p;
+  // Plateau p;
 
   return 0;
 }
