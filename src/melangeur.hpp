@@ -9,24 +9,24 @@
 
 namespace MMaze {
 
-  class Melangeur {
+class Melangeur {
 
-    public:
-      Melangeur(int octets);
-      ~Melangeur();
-      void inserer(const void* elem);
-      void inserer(const std::vector<void*> & v_elem);
-      void retirer(void* elem);
-      void vider();
-      int taille();
+  public:
+    Melangeur(int octets);
+    ~Melangeur();
+    void inserer(const void* elem);
+    void inserer(const std::vector<void*> & v_elem);
+    void retirer(void* elem);
+    void vider();
+    int taille();
 
-    private:
-      std::vector<void*> vec;
-      int taille_elt;
-      unsigned graine;
-      std::default_random_engine generateur;
+  private:
+    std::vector<void*> vec;
+    int taille_elem;
+    unsigned graine;
+    std::default_random_engine generateur;
 
-  };
+};
 
 } //end of namespace MMaze
 

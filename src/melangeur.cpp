@@ -3,9 +3,9 @@
 namespace MMaze {
 
   Melangeur::Melangeur(int octets) {
-    taille_elt = octets;
+    taille_elem = octets;
     graine = std::chrono::system_clock::now().time_since_epoch().count();
-    generateur = std::default_random_engine (graine);
+    generateur = std::default_random_engine(graine);
   }
 
   Melangeur::~Melangeur() {
@@ -13,12 +13,12 @@ namespace MMaze {
   }
 
   void Melangeur::inserer(const void* elem) {
-    vec.push_back((void*) malloc(taille_elt));
-    std::memcpy(vec.back(), elem, taille_elt);
+    vec.push_back(operator new(sizeof(elem)));
+    std::memcpy(vec.back(), elem, taille_elem);
   }
 
   void Melangeur::inserer(const std::vector<void*> & v_elem) {
-    for (unsigned int i = 0; i < v_elem.size(); i++) {
+    for(unsigned int i = 0; i < v_elem.size(); ++i) {
       inserer(v_elem[i]);
     }
   }
@@ -26,15 +26,15 @@ namespace MMaze {
   void Melangeur::retirer(void* elem) {
     std::uniform_int_distribution<int> distribution(0, taille()-1);
     int aleatoire = distribution(generateur);
-    std::memcpy(elem, vec[aleatoire], taille_elt);
-    free(vec[aleatoire]);
+    std::memcpy(elem, vec[aleatoire], taille_elem);
+    operator delete(vec[aleatoire]);
     vec[aleatoire] = vec.back();
     vec.pop_back();
   }
 
   void Melangeur::vider() {
-    for (unsigned int i = 0; i < vec.size(); i++) {
-      free(vec[i]);
+    for(unsigned int i = 0; i < vec.size(); ++i) {
+      operator delete(vec[i]);
     }
     vec.clear();
   }
