@@ -4,14 +4,14 @@
 #include "tuile.hpp"
 
 namespace MMaze {
-    class Plateau {
-        public:
-			Plateau();
-			~Plateau();
+  class Plateau {
+    public:
+      Plateau();
+      ~Plateau();
 
-        private:
-			Melangeur* pioche_tuiles;
-    };
+    private:
+      Melangeur* pioche_tuiles;
+  };
 }
 
 #endif
