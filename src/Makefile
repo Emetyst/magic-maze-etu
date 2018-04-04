@@ -20,7 +20,7 @@ SOURCES += plateau.cpp
 
 OBJECTS = $(SOURCES:.cpp=.o)
 
-CXXFLAGS  += -g -Wall -std=c++11 -pedantic
+CXXFLAGS  += -g -Wall -std=c++11 -pedantic -ggdb
 LDFLAGS +=
 
 $(OBJECTS) : %.o : %.cpp
