@@ -12,7 +12,6 @@ SOURCES += direction.cpp
 SOURCES += site.cpp
 SOURCES += graphe.cpp
 SOURCES += noeud.cpp
-SOURCES += arete.cpp
 SOURCES += unionfind.cpp
 SOURCES += cellule.cpp
 SOURCES += liste.cpp
