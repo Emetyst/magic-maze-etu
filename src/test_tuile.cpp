@@ -27,9 +27,9 @@ int main() {
     << TXT_CLEAR
     << std::endl;
   
-  t.save_to_file("./test_ecriture_tuile.txt");
+  t.sauver_dans_fichier("./test_ecriture_tuile.txt");
 
-  // Plateau p;
+  Plateau p;
 
   return 0;
 }

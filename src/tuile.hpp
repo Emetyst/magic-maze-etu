@@ -1,41 +1,37 @@
 #ifndef MMAZE_TUILE_HPP
 #define MMAZE_TUILE_HPP
 
-#include "case.hpp"
-#include "melangeur.hpp"
-#include "couleurs.hpp"
-#include "site.hpp"
 #include "mur.hpp"
+#include "melangeur.hpp"
+#include "site.hpp"
 
-#include <vector>
-#include <iostream>
 #include <fstream>
 #include <cstring>
 
 namespace MMaze {
 
-  class SiteBuildOptions {
+  class SiteOptions {
     public:
       unsigned int pos;
       Type type;
       Couleur couleur;
 
-      SiteBuildOptions(unsigned int p, Type t, Couleur c);
+      SiteOptions(unsigned int p, Type t, Couleur c);
   };
 
-  class TuileBuildOptions {
+  class TuileOptions {
     public:
-      bool estDepart;
-      std::vector<SiteBuildOptions> sites;
+      bool est_depart;
+      std::vector<SiteOptions> vec;
 
-      TuileBuildOptions(bool depart = false);
+      TuileOptions(bool depart = false);
   };
 
   class Tuile {
 
     public:
-      Tuile(TuileBuildOptions options = TuileBuildOptions());
-      ~Tuile();
+
+      Tuile(TuileOptions options = TuileOptions());
 
       //indique si deux cases voisines sont separees par un mur
       bool mur(Mur m) const;
@@ -46,17 +42,16 @@ namespace MMaze {
       //affichage
       friend std::ostream& operator<<(std::ostream& out, const Tuile& t);
 
-      void save_to_file(std::string filename);
+      void sauver_dans_fichier(std::string nom);
 
     private:
-      std::vector<Site> tab_sites;
-      std::vector<bool> tab_murs;
+      std::vector<Site> vec_sites;
+      std::vector<bool> vec_murs;
 
       //affichage
       void afficher_horizontal(std::ostream& out, unsigned int i) const;
       void afficher_vertical(std::ostream& out, unsigned int i) const;
-
-      void detruire_murs(TuileBuildOptions options);
+      void detruire_murs(TuileOptions options);
   };
 
 } //end of namespace MMaze

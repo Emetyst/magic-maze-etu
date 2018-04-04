@@ -4,23 +4,24 @@
 #include "case.hpp"
 #include "couleurs.hpp"
 
+#include <iostream>
+
 namespace MMaze {
-    enum Type {
-        AUCUN,
-        PORTE,
-        OBJECTIF,
-        SORTIE,
-        POINT_DEPART
-    };
+  enum Type {
+    AUCUN,
+    PORTE,
+    OBJECTIF,
+    SORTIE,
+    POINT_DEPART
+  };
 
-    class Site : public Case {
-        public:
-            Type type;
-            Couleur couleur;
-
-            Site(unsigned int li, unsigned int col, Couleur c = AUCUNE, Type t = AUCUN);
-            explicit Site(unsigned int index, Couleur c, Type t);
-    };
+  class Site : public Case {
+    public:
+      Type type;
+      Couleur couleur;
+      Site(unsigned int li, unsigned int col, Couleur c = AUCUNE, Type t = AUCUN);
+      explicit Site(unsigned int index, Couleur c, Type t);
+  };
 }
 
 #endif
