@@ -10,8 +10,9 @@ using namespace MMaze;
 
 int main() {
 
-  Tuile t;
-  std::cout << t << std::endl;
+  Tuile t, t_depart(true);
+  std::cout << std::endl << "Tuile de départ" << std::endl << t_depart << std::endl;
+  std::cout << std::endl << "Tuile classique" << std::endl << t << std::endl;
 
   //utilisation des couleurs
   std::cout
@@ -27,9 +28,10 @@ int main() {
     << TXT_CLEAR
     << std::endl;
   
-  t.sauver_dans_fichier("./test_ecriture_tuile.txt");
+  t.sauver_dans_fichier("../assets/test_ecriture_tuile.txt");
+  t_depart.sauver_dans_fichier("../assets/tuile_depart.txt");
 
-  Plateau p;
+  // Plateau p;
 
   return 0;
 }
