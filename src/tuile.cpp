@@ -6,27 +6,26 @@
 
 namespace MMaze {
 
-  SiteOptions::SiteOptions(unsigned int p, Type t, Couleur c) {
-    pos = p;
-    type = t;
-    couleur = c;
-  }
+  Tuile::Tuile(bool depart) {
+    for(unsigned int i = 0; i < 16; i++) {
+      vec_sites.push_back(Site(i, AUCUNE, AUCUN));
+    }
+    vec_murs.resize(24, true);
 
-  TuileOptions::TuileOptions(bool depart) {
     if(depart) {
       // Placement points de départ et portes correspondantes
-      vec.push_back(SiteOptions(2, PORTE, ORANGE));
-      vec.push_back(SiteOptions(4, PORTE, VIOLET));
-      vec.push_back(SiteOptions(5, POINT_DEPART, VIOLET));
-      vec.push_back(SiteOptions(6, POINT_DEPART, ORANGE));
-      vec.push_back(SiteOptions(9, POINT_DEPART, JAUNE));
-      vec.push_back(SiteOptions(10, POINT_DEPART, VERT));
-      vec.push_back(SiteOptions(11, PORTE, VERT));
-      vec.push_back(SiteOptions(13, PORTE, JAUNE));
+      modifier_site(2, PORTE, ORANGE);
+      modifier_site(4, PORTE, VIOLET);
+      modifier_site(5, POINT_DEPART, VIOLET);
+      modifier_site(6, POINT_DEPART, ORANGE);
+      modifier_site(9, POINT_DEPART, JAUNE);
+      modifier_site(10, POINT_DEPART, VERT);
+      modifier_site(11, PORTE, VERT);
+      modifier_site(13, PORTE, JAUNE);
     }
     else {
       // Placement d'un accès
-      vec.push_back(SiteOptions(13, PORTE, AUCUNE));
+      modifier_site(13, PORTE, AUCUNE);
 
       // Initialisation de mélangeurs pour décider le nombre, la couleur et la position des portes (au moins une)
       Melangeur position_portes(sizeof(int));
@@ -48,23 +47,10 @@ namespace MMaze {
         position_portes.retirer(&n);
         Couleur c;
         couleur_portes.retirer(&c);
-        vec.push_back(SiteOptions(n, PORTE, c));
+        modifier_site(n, PORTE, c);
       }
     }
-  }
 
-  // ------------------------------------------------------------------
-
-  Tuile::Tuile(TuileOptions options) {
-    for(unsigned int i = 0; i < 16; i++) {
-      vec_sites.push_back(Site(i, AUCUNE, AUCUN));
-    }
-    vec_murs.resize(24, true);
-    for(unsigned int i = 0; i < options.vec.size(); i++) {
-      vec_sites[options.vec[i].pos].type = options.vec[i].type;
-      vec_sites[options.vec[i].pos].couleur = options.vec[i].couleur;
-    }
-    detruire_murs(options);
   }
 
   bool Tuile::mur(Mur m) const {
@@ -182,7 +168,12 @@ namespace MMaze {
     }
   }
 
-  void Tuile::detruire_murs(TuileOptions options) {
+  void Tuile::modifier_site(unsigned int pos, const Type & t, const Couleur & c) {
+    vec_sites[pos].type = t;
+    vec_sites[pos].couleur = c;
+  }
+
+  void Tuile::detruire_murs() {
 
   }
 

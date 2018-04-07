@@ -7,31 +7,14 @@
 
 #include <fstream>
 #include <cstring>
+#include <vector>
 
 namespace MMaze {
-
-  class SiteOptions {
-    public:
-      unsigned int pos;
-      Type type;
-      Couleur couleur;
-
-      SiteOptions(unsigned int p, Type t, Couleur c);
-  };
-
-  class TuileOptions {
-    public:
-      bool est_depart;
-      std::vector<SiteOptions> vec;
-
-      TuileOptions(bool depart = false);
-  };
-
   class Tuile {
 
     public:
-
-      Tuile(TuileOptions options = TuileOptions());
+    
+      Tuile(bool depart = false);
 
       //indique si deux cases voisines sont separees par un mur
       bool mur(Mur m) const;
@@ -51,7 +34,9 @@ namespace MMaze {
       //affichage
       void afficher_horizontal(std::ostream& out, unsigned int i) const;
       void afficher_vertical(std::ostream& out, unsigned int i) const;
-      void detruire_murs(TuileOptions options);
+      void detruire_murs();
+
+      void modifier_site(unsigned int pos, const Type & t, const Couleur & c);
   };
 
 } //end of namespace MMaze
