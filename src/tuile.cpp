@@ -64,8 +64,54 @@ namespace MMaze {
 
   void Tuile::afficher_horizontal(std::ostream& out, unsigned int i) const {
     assert(i < 5);
-    if(i == 0 || i == 4) {
-      out << "+---+---+---+---+";
+    if(i == 0) {
+      out << "+---+---+-";
+      if (vec_sites[2].type == PORTE) {
+        switch (vec_sites[2].couleur) {
+          case AUCUNE:
+            out << TXT_BOLD << "v";
+            break;
+          case JAUNE:
+            out << TXT_JAUNE << "^";
+            break;
+          case ORANGE:
+            out << TXT_ORANGE << "^";
+            break;
+          case VERT:
+            out << TXT_VERT << "^";
+            break;
+          case VIOLET:
+            out << TXT_VIOLET << "^";
+            break;
+        }
+        out << TXT_CLEAR;
+      } 
+      else out << "-";
+      out << "-+---+";
+    } else if(i == 4) {
+      out << "+---+-";
+      if (vec_sites[13].type == PORTE) {
+        switch (vec_sites[13].couleur) {
+          case AUCUNE:
+            out << TXT_BOLD << "^";
+            break;
+          case JAUNE:
+            out << TXT_JAUNE << "v";
+            break;
+          case ORANGE:
+            out << TXT_ORANGE << "v";
+            break;
+          case VERT:
+            out << TXT_VERT << "v";
+            break;
+          case VIOLET:
+            out << TXT_VIOLET << "v";
+            break;
+        }
+        out << TXT_CLEAR;
+      } 
+      else out << "-";
+      out << "-+---+---+";
     } else {
       out << "+";
       for(unsigned int m = 0; m < 4; ++m) {
@@ -82,7 +128,30 @@ namespace MMaze {
 
   void Tuile::afficher_vertical(std::ostream& out, unsigned int i) const {
     assert(i < 4);
-    out << "|";
+
+    if (i == 1) {
+      if (vec_sites[4].type == PORTE) {
+        switch (vec_sites[4].couleur) {
+          case AUCUNE:
+            out << TXT_BOLD << ">";
+            break;
+          case JAUNE:
+            out << TXT_JAUNE << "<";
+            break;
+          case ORANGE:
+            out << TXT_ORANGE << "<";
+            break;
+          case VERT:
+            out << TXT_VERT << "<";
+            break;
+          case VIOLET:
+            out << TXT_VIOLET << "<";
+            break;
+        }
+        out << TXT_CLEAR;
+      } else out << "|";
+    } else out << "|";
+
     for(unsigned int m = 0; m < 4; ++m) {
       out << "   ";
       if(m < 3) {
@@ -95,7 +164,29 @@ namespace MMaze {
         }
       }
     }
-    out << "|";
+
+    if (i == 2) {
+      if (vec_sites[11].type == PORTE) {
+        switch (vec_sites[11].couleur) {
+          case AUCUNE:
+            out << TXT_BOLD << "<";
+            break;
+          case JAUNE:
+            out << TXT_JAUNE << ">";
+            break;
+          case ORANGE:
+            out << TXT_ORANGE << ">";
+            break;
+          case VERT:
+            out << TXT_VERT << ">";
+            break;
+          case VIOLET:
+            out << TXT_VIOLET << ">";
+            break;
+        }
+        out << TXT_CLEAR;
+      } else out << "|";
+    } else out << "|";
   }
 
   std::ostream& operator<< (std::ostream& out, const Tuile& t) {
