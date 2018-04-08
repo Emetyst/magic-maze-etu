@@ -10,7 +10,7 @@ using namespace MMaze;
 
 int main() {
 
-  Tuile t, t_depart(true);
+  Tuile t, t_depart(0, true);
   std::cout << std::endl << "Tuile de départ" << std::endl << t_depart << std::endl;
   std::cout << std::endl << "Tuile classique" << std::endl << t << std::endl;
 
@@ -31,7 +31,9 @@ int main() {
   t.sauver_dans_fichier("../assets/test_ecriture_tuile.txt");
   t_depart.sauver_dans_fichier("../assets/tuile_depart.txt");
 
-  // Plateau p;
+  Plateau p;
+
+  p.sauver_plateau_dans_dossier("../assets/plateau/");
 
   return 0;
 }
