@@ -282,4 +282,100 @@ namespace MMaze {
 
   }
 
+  void Tuile::rotation_gauche() {
+    std::vector<Site> temp_sites;
+    temp_sites.push_back(vec_sites[3]);
+    temp_sites.push_back(vec_sites[7]);
+    temp_sites.push_back(vec_sites[11]);
+    temp_sites.push_back(vec_sites[15]);
+    temp_sites.push_back(vec_sites[2]);
+    temp_sites.push_back(vec_sites[6]);
+    temp_sites.push_back(vec_sites[10]);
+    temp_sites.push_back(vec_sites[14]);
+    temp_sites.push_back(vec_sites[1]);
+    temp_sites.push_back(vec_sites[5]);
+    temp_sites.push_back(vec_sites[9]);
+    temp_sites.push_back(vec_sites[13]);
+    temp_sites.push_back(vec_sites[0]);
+    temp_sites.push_back(vec_sites[4]);
+    temp_sites.push_back(vec_sites[8]);
+    temp_sites.push_back(vec_sites[12]);
+    vec_sites = temp_sites;
+
+    std::vector<bool> temp_murs;
+    temp_murs.push_back(vec_murs[20]);
+    temp_murs.push_back(vec_murs[21]);
+    temp_murs.push_back(vec_murs[22]);
+    temp_murs.push_back(vec_murs[23]);
+    temp_murs.push_back(vec_murs[16]);
+    temp_murs.push_back(vec_murs[17]);
+    temp_murs.push_back(vec_murs[18]);
+    temp_murs.push_back(vec_murs[19]);
+    temp_murs.push_back(vec_murs[12]);
+    temp_murs.push_back(vec_murs[13]);
+    temp_murs.push_back(vec_murs[14]);
+    temp_murs.push_back(vec_murs[15]);
+    temp_murs.push_back(vec_murs[3]);
+    temp_murs.push_back(vec_murs[2]);
+    temp_murs.push_back(vec_murs[1]);
+    temp_murs.push_back(vec_murs[0]);
+    temp_murs.push_back(vec_murs[7]);
+    temp_murs.push_back(vec_murs[6]);
+    temp_murs.push_back(vec_murs[5]);
+    temp_murs.push_back(vec_murs[4]);
+    temp_murs.push_back(vec_murs[11]);
+    temp_murs.push_back(vec_murs[10]);
+    temp_murs.push_back(vec_murs[9]);
+    temp_murs.push_back(vec_murs[8]);
+    vec_murs = temp_murs;
+  }
+
+  void Tuile::rotation_droite() {
+    std::vector<Site> temp_sites;
+    temp_sites.push_back(vec_sites[12]);
+    temp_sites.push_back(vec_sites[8]);
+    temp_sites.push_back(vec_sites[4]);
+    temp_sites.push_back(vec_sites[0]);
+    temp_sites.push_back(vec_sites[13]);
+    temp_sites.push_back(vec_sites[9]);
+    temp_sites.push_back(vec_sites[5]);
+    temp_sites.push_back(vec_sites[1]);
+    temp_sites.push_back(vec_sites[14]);
+    temp_sites.push_back(vec_sites[10]);
+    temp_sites.push_back(vec_sites[6]);
+    temp_sites.push_back(vec_sites[2]);
+    temp_sites.push_back(vec_sites[15]);
+    temp_sites.push_back(vec_sites[11]);
+    temp_sites.push_back(vec_sites[7]);
+    temp_sites.push_back(vec_sites[3]);
+    vec_sites = temp_sites;
+
+    std::vector<bool> temp_murs;
+    temp_murs.push_back(vec_murs[15]);
+    temp_murs.push_back(vec_murs[14]);
+    temp_murs.push_back(vec_murs[13]);
+    temp_murs.push_back(vec_murs[12]);
+    temp_murs.push_back(vec_murs[19]);
+    temp_murs.push_back(vec_murs[18]);
+    temp_murs.push_back(vec_murs[17]);
+    temp_murs.push_back(vec_murs[16]);
+    temp_murs.push_back(vec_murs[23]);
+    temp_murs.push_back(vec_murs[22]);
+    temp_murs.push_back(vec_murs[21]);
+    temp_murs.push_back(vec_murs[20]);
+    temp_murs.push_back(vec_murs[8]);
+    temp_murs.push_back(vec_murs[9]);
+    temp_murs.push_back(vec_murs[10]);
+    temp_murs.push_back(vec_murs[11]);
+    temp_murs.push_back(vec_murs[4]);
+    temp_murs.push_back(vec_murs[5]);
+    temp_murs.push_back(vec_murs[6]);
+    temp_murs.push_back(vec_murs[7]);
+    temp_murs.push_back(vec_murs[0]);
+    temp_murs.push_back(vec_murs[1]);
+    temp_murs.push_back(vec_murs[2]);
+    temp_murs.push_back(vec_murs[3]);
+    vec_murs = temp_murs;
+  }
+
 } //end of namespace MMaze

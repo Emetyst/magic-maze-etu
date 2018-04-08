@@ -29,6 +29,9 @@ namespace MMaze {
       void placer_autre_site(const Type & t, const Couleur & c);
       void sauver_dans_fichier(std::string nom);
 
+      void rotation_gauche();
+      void rotation_droite();
+
     private:
       std::vector<Site> vec_sites;
       std::vector<bool> vec_murs;

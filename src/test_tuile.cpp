@@ -14,6 +14,12 @@ int main() {
   std::cout << std::endl << "Tuile de départ" << std::endl << t_depart << std::endl;
   std::cout << std::endl << "Tuile classique" << std::endl << t << std::endl;
 
+  t.rotation_droite();
+  std::cout << std::endl << "Tuile classique" << std::endl << t << std::endl;
+  t.rotation_gauche();
+  std::cout << std::endl << "Tuile classique" << std::endl << t << std::endl;
+    
+
   //utilisation des couleurs
   std::cout
     << TXT_JAUNE << "&"
