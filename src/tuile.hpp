@@ -43,6 +43,7 @@ namespace MMaze {
       void afficher_vertical(std::ostream& out, unsigned int i) const;
       void detruire_murs();
       void construire_graphe();
+      bool sites_relies (const std::vector<Liste>& classes_equiv, const std::vector<int>& indices_sites);
 
   };
 

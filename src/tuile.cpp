@@ -285,7 +285,39 @@ namespace MMaze {
     for (int i = 0; i < 16; i++) {
       classes_equiv.push_back(Liste({i}));
     }
-    
+    Melangeur murs_a_detruire(sizeof(int));
+    for (unsigned int i = 0; i < 24; i++) {
+      murs_a_detruire.inserer(&i);
+    }
+    std::vector<int> indices_sites;
+    for (unsigned int i = 0; i < vec_sites.size(); i++) {
+      if (vec_sites[i].type != AUCUN) indices_sites.push_back(i);
+    }
+
+    while (!sites_relies(classes_equiv, indices_sites)) {
+      int indice_mur;
+      murs_a_detruire.retirer(&indice_mur);
+      Mur m(indice_mur);
+      if ( classes_equiv[m[0].index()].queue()->valeur < classes_equiv[m[1].index()].queue()->valeur ) {
+        // Les deux cases n'ont pas le même représentant donc on détruit le mur pour les réunir
+        classes_equiv[m[1].index()].concatener( classes_equiv[m[0].index()] );
+        vec_murs[indice_mur] = false;
+      } else if ( classes_equiv[m[1].index()].queue()->valeur < classes_equiv[m[0].index()].queue()->valeur ) {
+        // Les deux cases n'ont pas le même représentant donc on détruit le mur pour les réunir
+        classes_equiv[m[0].index()].concatener( classes_equiv[m[1].index()] );
+        vec_murs[indice_mur] = false;
+      }
+    }
+  }
+
+  bool Tuile::sites_relies (const std::vector<Liste>& classes_equiv, const std::vector<int>& indices_sites) {
+    int representant = classes_equiv[indices_sites[0]].queue()->valeur;
+    for (unsigned int i = 1; i < indices_sites.size(); i++) {
+      if (representant != classes_equiv[indices_sites[i]].queue()->valeur) {
+        return false;
+      }
+    }
+    return true;
   }
 
   void Tuile::construire_graphe() {
