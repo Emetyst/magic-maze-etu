@@ -4,6 +4,7 @@
 #include "mur.hpp"
 #include "melangeur.hpp"
 #include "site.hpp"
+#include "liste.hpp"
 
 #include <fstream>
 #include <cstring>
@@ -41,6 +42,7 @@ namespace MMaze {
       void afficher_horizontal(std::ostream& out, unsigned int i) const;
       void afficher_vertical(std::ostream& out, unsigned int i) const;
       void detruire_murs();
+      void construire_graphe();
 
   };
 

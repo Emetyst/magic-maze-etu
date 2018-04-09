@@ -79,5 +79,9 @@ int main() {
   l4.afficher();
   std::cout << std::endl << "Avec cout : " << l4 << std::endl;
 
+  l4.concatener(l3);
+  std::cout << "l4.concatener(l3) :" << l4 << std::endl;
+  std::cout << "l3" << l3 << std::endl;
+
   return 0 ;
 }

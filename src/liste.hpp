@@ -31,6 +31,8 @@ class Liste {
     /* ajout en queue */
     void ajouter_en_queue(int valeur) ;
 
+    void concatener(const Liste& autre);
+
     /* suppression en tete */
     void supprimer_en_tete() ;
 

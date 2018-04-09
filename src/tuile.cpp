@@ -53,6 +53,8 @@ namespace MMaze {
       }
     }
 
+    detruire_murs();
+    construire_graphe();
   }
 
   bool Tuile::mur(Mur m) const {
@@ -279,6 +281,14 @@ namespace MMaze {
   }
 
   void Tuile::detruire_murs() {
+    std::vector<Liste> classes_equiv;
+    for (int i = 0; i < 16; i++) {
+      classes_equiv.push_back(Liste({i}));
+    }
+    
+  }
+
+  void Tuile::construire_graphe() {
 
   }
 
@@ -328,6 +338,8 @@ namespace MMaze {
     temp_murs.push_back(vec_murs[9]);
     temp_murs.push_back(vec_murs[8]);
     vec_murs = temp_murs;
+
+    construire_graphe();
   }
 
   void Tuile::rotation_droite() {
@@ -376,6 +388,8 @@ namespace MMaze {
     temp_murs.push_back(vec_murs[2]);
     temp_murs.push_back(vec_murs[3]);
     vec_murs = temp_murs;
+
+    construire_graphe();
   }
 
 } //end of namespace MMaze
