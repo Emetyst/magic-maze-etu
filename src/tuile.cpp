@@ -204,6 +204,18 @@ namespace MMaze {
     return out;
   }
 
+  void Tuile::afficher() {
+    std::cout << std::endl;
+    for(unsigned int i = 0; i < 4; ++i) {
+      afficher_horizontal(std::cout, i);
+      std::cout << std::endl;
+      afficher_vertical(std::cout, i);
+      std::cout << std::endl;
+    }
+    afficher_horizontal(std::cout, 4);
+    std::cout << std::endl;
+  }
+
   void Tuile::sauver_dans_fichier(std::string nom) {
     std::ofstream flux(nom, std::ios::out | std::ios::trunc);
     if(!flux) {
@@ -281,30 +293,62 @@ namespace MMaze {
   }
 
   void Tuile::detruire_murs() {
+    // Initialisation des classes d'équivalence
     std::vector<Liste> classes_equiv;
     for (int i = 0; i < 16; i++) {
       classes_equiv.push_back(Liste({i}));
     }
+
+    // std::cout << "Initialisation des classes d'équivalence" << std::endl;
+    // for (unsigned int i = 0; i < classes_equiv.size(); i++) {
+    //   std::cout << "(" << i << ") " << classes_equiv[i] << std::endl;
+    // }
+    // std::cout << std::endl;
+
+    // std::cout << "Murs à détruire : ";
     Melangeur murs_a_detruire(sizeof(int));
-    for (unsigned int i = 0; i < 24; i++) {
+    for (unsigned int i = 0; i < vec_murs.size(); i++) {
       murs_a_detruire.inserer(&i);
+      // std::cout << i << " ";
     }
+    // std::cout << std::endl;
+
+    // std::cout << "Sites a relier : ";
     std::vector<int> indices_sites;
     for (unsigned int i = 0; i < vec_sites.size(); i++) {
-      if (vec_sites[i].type != AUCUN) indices_sites.push_back(i);
+      if (vec_sites[i].type != AUCUN) {
+        indices_sites.push_back(i);
+        // std::cout << i << " ";
+      }
     }
+    // std::cout << std::endl;
 
     while (!sites_relies(classes_equiv, indices_sites)) {
+
+      // afficher();
+      // for (unsigned int i = 0; i < classes_equiv.size(); i++) {
+      //   std::cout << "(" << i << ") " << classes_equiv[i] << std::endl;
+      // }
+      // std::cout << std::endl;
+
       int indice_mur;
       murs_a_detruire.retirer(&indice_mur);
+      // std::cout << "Mur a detruire : " << indice_mur << std::endl;
       Mur m(indice_mur);
-      if ( classes_equiv[m[0].index()].queue()->valeur < classes_equiv[m[1].index()].queue()->valeur ) {
+      int rep_m0 = classes_equiv[m[0].index()].queue()->valeur;
+      int rep_m1 = classes_equiv[m[1].index()].queue()->valeur;
+      if ( rep_m0 < rep_m1 ) {
         // Les deux cases n'ont pas le même représentant donc on détruit le mur pour les réunir
-        classes_equiv[m[1].index()].concatener( classes_equiv[m[0].index()] );
+        for (unsigned int i = 0; i < classes_equiv.size(); i++) {
+          int rep_mi = classes_equiv[i].queue()->valeur;
+          if ( rep_mi == rep_m1 ) classes_equiv[i].concatener(classes_equiv[m[0].index()]);
+        }
         vec_murs[indice_mur] = false;
-      } else if ( classes_equiv[m[1].index()].queue()->valeur < classes_equiv[m[0].index()].queue()->valeur ) {
-        // Les deux cases n'ont pas le même représentant donc on détruit le mur pour les réunir
-        classes_equiv[m[0].index()].concatener( classes_equiv[m[1].index()] );
+      } else if ( rep_m0 > rep_m1 ) {
+        for (unsigned int i = 0; i < classes_equiv.size(); i++) {
+          int rep_mi = classes_equiv[i].queue()->valeur;
+          if ( rep_mi == rep_m0 ) classes_equiv[i].concatener(classes_equiv[m[1].index()]);
+        }
         vec_murs[indice_mur] = false;
       }
     }
@@ -312,7 +356,9 @@ namespace MMaze {
 
   bool Tuile::sites_relies (const std::vector<Liste>& classes_equiv, const std::vector<int>& indices_sites) {
     int representant = classes_equiv[indices_sites[0]].queue()->valeur;
+    // std::cout << "rep[" << indices_sites[0] << "] : " << representant << std::endl;
     for (unsigned int i = 1; i < indices_sites.size(); i++) {
+      // std::cout << "rep[" << indices_sites[i] << "] : " << classes_equiv[indices_sites[i]].queue()->valeur << std::endl;
       if (representant != classes_equiv[indices_sites[i]].queue()->valeur) {
         return false;
       }

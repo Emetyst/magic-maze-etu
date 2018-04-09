@@ -1,0 +1,16 @@
+tuile
+mur 0
+mur 2
+mur 5
+mur 7
+mur 9
+mur 10
+mur 17
+mur 18
+mur 20
+site 2 porte vert 
+site 4 porte jaune 
+site 11 porte orange 
+site 12 objectif jaune 
+site 13 porte aucune 
+fin

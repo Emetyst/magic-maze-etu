@@ -25,6 +25,7 @@ namespace MMaze {
 
       //affichage
       friend std::ostream& operator<<(std::ostream& out, const Tuile& t);
+      void afficher();
 
       void modifier_site(unsigned int pos, const Type & t, const Couleur & c);
       void placer_autre_site(const Type & t, const Couleur & c);

@@ -1,0 +1,17 @@
+tuile
+mur 0
+mur 2
+mur 4
+mur 6
+mur 9
+mur 12
+mur 14
+mur 17
+mur 18
+mur 23
+site 2 porte vert 
+site 3 sortie jaune 
+site 4 porte orange 
+site 11 porte violet 
+site 13 porte aucune 
+fin

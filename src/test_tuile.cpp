@@ -37,8 +37,8 @@ int main() {
   t.sauver_dans_fichier("../assets/test_ecriture_tuile.txt");
   t_depart.sauver_dans_fichier("../assets/tuile_depart.txt");
 
-  // Plateau p;
-  // p.sauver_plateau_dans_dossier("../assets/plateau/");
+  Plateau p;
+  p.sauver_plateau_dans_dossier("../assets/plateau/");
 
   return 0;
 }
