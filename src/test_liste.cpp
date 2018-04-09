@@ -83,5 +83,23 @@ int main() {
   std::cout << "l4.concatener(l3) :" << l4 << std::endl;
   std::cout << "l3" << l3 << std::endl;
 
+  Liste l5, l6;
+  std::cout << "l5 (taille " << l5.taille() << ") : " << l5 << std::endl;
+  std::cout << "l6 (taille " << l6.taille() << ") : " << l6 << std::endl << std::endl;
+  l5.ajouter_en_tete(-1);
+  l5.concatener(l6);
+  std::cout << "l5 (taille " << l5.taille() << ") : " << l5 << std::endl;
+  std::cout << "l6 (taille " << l6.taille() << ") : " << l6 << std::endl << std::endl;
+  l6.ajouter_en_queue(5);
+  l5.concatener(l6);
+  std::cout << "l5 (taille " << l5.taille() << ") : " << l5 << std::endl;
+  std::cout << "l6 (taille " << l6.taille() << ") : " << l6 << std::endl << std::endl;
+  l6.ajouter_en_tete(4);
+  l6.ajouter_en_tete(3);
+  l6.ajouter_en_tete(0);
+  l5.concatener(l6);
+  std::cout << "l5 (taille " << l5.taille() << ") : " << l5 << std::endl;
+  std::cout << "l6 (taille " << l6.taille() << ") : " << l6 << std::endl << std::endl;
+
   return 0 ;
 }

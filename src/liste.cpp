@@ -44,13 +44,7 @@ void Liste::ajouter_en_queue(int valeur) {
 }
 
 void Liste::concatener(const Liste& autre) {
-  if (autre.taille() == 0) return;
-  if (taille() == 0) {
-    last = (Cellule*) autre.queue();
-    first = (Cellule*) autre.tete();
-  } else {
-    last->next = (Cellule*) autre.tete();
-  }
+  copier(autre);
 }
 
 void Liste::supprimer_en_tete() {
