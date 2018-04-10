@@ -409,7 +409,7 @@ namespace MMaze {
   }
 
   void Tuile::construire_graphe() {
-
+    
   }
 
   void Tuile::rotation_gauche() {
