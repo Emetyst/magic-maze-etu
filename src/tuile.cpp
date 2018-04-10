@@ -322,14 +322,14 @@ namespace MMaze {
     for (unsigned int i = 0; i < vec_murs.size(); i++) {
       murs_a_detruire.inserer(&i);
     }
-    std::vector<int> indices_sites;
+    std::vector<int> site;
     for (unsigned int i = 0; i < vec_sites.size(); i++) {
       if (vec_sites[i].type != AUCUN) {
-        indices_sites.push_back(i);
+        site.push_back(i);
       }
     }
 
-    while (!sites_relies(uf.classe_equiv, indices_sites) && murs_a_detruire.taille() > 0) {
+    while (!sites_relies(uf, site)) {
       int indice_mur;
       murs_a_detruire.retirer(&indice_mur);
       Mur m(indice_mur);
@@ -362,16 +362,16 @@ namespace MMaze {
     // std::cout << std::endl;
 
     // std::cout << "Sites a relier : ";
-    std::vector<int> indices_sites;
+    std::vector<int> site;
     for (unsigned int i = 0; i < vec_sites.size(); i++) {
       if (vec_sites[i].type != AUCUN) {
-        indices_sites.push_back(i);
+        site.push_back(i);
         // std::cout << i << " ";
       }
     }
     // std::cout << std::endl;
 
-    while (!sites_relies(classes_equiv, indices_sites)) {
+    while (!sites_relies(classes_equiv, site)) {
 
       // afficher();
       // for (unsigned int i = 0; i < classes_equiv.size(); i++) {
@@ -403,22 +403,22 @@ namespace MMaze {
 */
   }
 
-  bool Tuile::sites_relies (const std::vector<Liste>& classes_equiv, const std::vector<int>& indices_sites) {
-    int representant = classes_equiv[indices_sites[0]].queue()->valeur;
-    // std::cout << "rep[" << indices_sites[0] << "] : " << representant << std::endl;
-    for (unsigned int i = 1; i < indices_sites.size(); i++) {
-      // std::cout << "rep[" << indices_sites[i] << "] : " << classes_equiv[indices_sites[i]].queue()->valeur << std::endl;
-      if (representant != classes_equiv[indices_sites[i]].queue()->valeur) {
+  bool Tuile::sites_relies (const std::vector<Liste>& classes_equiv, const std::vector<int>& site) {
+    int representant = classes_equiv[site[0]].queue()->valeur;
+    // std::cout << "rep[" << site[0] << "] : " << representant << std::endl;
+    for (unsigned int i = 1; i < site.size(); i++) {
+      // std::cout << "rep[" << site[i] << "] : " << classes_equiv[site[i]].queue()->valeur << std::endl;
+      if (representant != classes_equiv[site[i]].queue()->valeur) {
         return false;
       }
     }
     return true;
   }
 
-  bool Tuile::sites_relies (const std::vector<ClasseEquiv>& classes_equiv, const std::vector<int>& indices_sites) {
-    int representant = classes_equiv[indices_sites[0]].representant;
-    for (unsigned int i = 1; i < indices_sites.size(); i++) {
-      if (representant != classes_equiv[indices_sites[i]].representant) {
+  bool Tuile::sites_relies (UnionFind& uf, const std::vector<int>& site) {
+    int representant = uf.find_rep(site[0]);
+    for (unsigned int i = 1; i < site.size(); i++) {
+      if (representant != uf.find_rep(site[i])) {
         return false;
       }
     }
