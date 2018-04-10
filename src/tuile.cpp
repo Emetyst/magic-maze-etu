@@ -299,6 +299,60 @@ namespace MMaze {
     }
   }
 
+  void Tuile::lire_dans_fichier(std::string nom) {
+    std::ifstream flux(nom, std::ios::in);
+    if(!flux) {
+      std::cerr << "Erreur : le fichier " << nom.c_str() << " n'a pas pu être ouvert" << std::endl;
+    }
+    else {
+      reset_tuile();
+      std::string tuile;
+      flux >> tuile;
+      std::string element;
+      flux >> element;
+      while (element != "fin") {
+        if (element == "mur") {
+          int pos_mur;
+          flux >> pos_mur;
+          vec_murs[pos_mur] = true;
+        }
+        else if (element == "site") {
+          int pos_site;
+          std::string type_site;
+          std::string couleur_site;
+          flux >> pos_site >> type_site >> couleur_site;
+
+          Type t = AUCUN;
+          if (type_site == "porte") t = PORTE;
+          if (type_site == "depart") t = POINT_DEPART;
+          if (type_site == "objectif") t = OBJECTIF;
+          if (type_site == "sortie") t = SORTIE;
+
+          Couleur c = AUCUNE;
+          if (couleur_site == "orange") c = ORANGE;
+          if (couleur_site == "violet") c = VIOLET;
+          if (couleur_site == "jaune") c = JAUNE;
+          if (couleur_site == "vert") c = VERT;
+          if (couleur_site == "aucune") c = AUCUNE;
+
+          modifier_site(pos_site, t, c);
+        }
+        flux >> element;
+      }
+      flux.close();
+    }
+
+  }
+
+  void Tuile::reset_tuile() {
+    for (unsigned int i = 0; i < vec_sites.size(); i++) {
+      modifier_site(i, AUCUN, AUCUNE);
+    }
+    for (unsigned int i = 0; i < vec_murs.size(); i++) {
+      vec_murs[i] = false;
+    }
+  }
+
   void Tuile::modifier_site(unsigned int pos, const Type & t, const Couleur & c) {
     vec_sites[pos].type = t;
     vec_sites[pos].couleur = c;

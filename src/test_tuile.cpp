@@ -43,5 +43,9 @@ int main() {
   // p.afficher_tuiles();
   // p.sauver_plateau_dans_dossier("../assets/plateau/");
 
+  Tuile t_fichier;
+  t_fichier.lire_dans_fichier("../assets/MMaze_tests/tuile_0.txt");
+  std::cout << std::endl << std::endl << "Tuile t_fichier" << std::endl << t_fichier << std::endl;
+
   return 0;
 }

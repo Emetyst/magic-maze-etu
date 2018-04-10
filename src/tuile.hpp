@@ -8,7 +8,7 @@
 #include "unionfind.hpp"
 
 #include <fstream>
-#include <cstring>
+#include <string>
 #include <vector>
 
 namespace MMaze {
@@ -31,6 +31,7 @@ namespace MMaze {
       void modifier_site(unsigned int pos, const Type & t, const Couleur & c);
       void placer_autre_site(const Type & t, const Couleur & c);
       void sauver_dans_fichier(std::string nom);
+      void lire_dans_fichier(std::string nom);
 
       void rotation_gauche();
       void rotation_droite();
@@ -46,7 +47,8 @@ namespace MMaze {
       void detruire_murs();
       void eliminer_impasses();
       void construire_graphe();
-      bool sites_relies (UnionFind& uf, const std::vector<int>& site);
+      bool sites_relies(UnionFind& uf, const std::vector<int>& site);
+      void reset_tuile();
 
   };
 
