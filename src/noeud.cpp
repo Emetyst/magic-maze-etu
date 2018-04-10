@@ -1,8 +1,10 @@
 #include "noeud.hpp"
 
 namespace MMaze {
-    Noeud::Noeud(void* d) {
-        donnee = d;
+
+
+    Noeud::Noeud(int t, int c) {
+        
     }
 
     Noeud::~Noeud() {

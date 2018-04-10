@@ -4,17 +4,23 @@
 #include "noeud.hpp"
 
 namespace MMaze {
+
   class Graphe {
     public:
       Graphe();
       ~Graphe();
-      void ajouter_noeud(Noeud* noeud);
-      Noeud* rechercher_noeud(void* d);
-      void supprimer_tete();
-      void vider();
-      void parcourir(Noeud* source, Noeud* destination);
+
+      bool sont_voisins(int x, int y);
+      std::vector<Noeud*> voisins(Noeud* x);
+      void ajouter_sommet(Noeud* x);
+      void supprimer_sommet(Noeud* x);
+      void ajouter_arete(Noeud* x, Noeud* y);
+      void supprimer_arete(Noeud* x, Noeud* y);
+
+
+
     private:
-      std::vector<Noeud*> noeuds;
+      std::vector<std::vector<Noeud*>> noeuds;
   };
 }
 

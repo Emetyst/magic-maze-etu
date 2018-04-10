@@ -8,11 +8,12 @@
 #include <limits>
 
 namespace MMaze {
+
     class Noeud {
         public:
-            Noeud(void* d);
+            Noeud(int t, int c);
             ~Noeud();
-            void* donnee;
+            CoordCase donnee;
             std::vector<Noeud*> aretes;
         private:
     };
