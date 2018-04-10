@@ -11,13 +11,15 @@ using namespace MMaze;
 int main() {
 
   Tuile t, t_depart(0, true);
+  t.placer_autre_site(SORTIE, VERT);
+  t.placer_autre_site(OBJECTIF, VIOLET);
   std::cout << std::endl << "Tuile de départ" << std::endl << t_depart << std::endl;
   std::cout << std::endl << "Tuile classique" << std::endl << t << std::endl;
 
   t.rotation_droite();
-  std::cout << std::endl << "Tuile classique" << std::endl << t << std::endl;
+  std::cout << std::endl << "Tuile classique (après rotation droite)" << std::endl << t << std::endl;
   t.rotation_gauche();
-  std::cout << std::endl << "Tuile classique" << std::endl << t << std::endl;
+  std::cout << std::endl << "Tuile classique (après rotation gauche)" << std::endl << t << std::endl;
     
 
   //utilisation des couleurs
@@ -37,8 +39,8 @@ int main() {
   // t.sauver_dans_fichier("../assets/test_ecriture_tuile.txt");
   // t_depart.sauver_dans_fichier("../assets/tuile_depart.txt");
 
-  Plateau p;
-  p.afficher_tuiles();
+  // Plateau p;
+  // p.afficher_tuiles();
   // p.sauver_plateau_dans_dossier("../assets/plateau/");
 
   return 0;

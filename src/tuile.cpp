@@ -338,81 +338,6 @@ namespace MMaze {
         vec_murs[indice_mur] = false;
       }
     }
-
-
-/*
-    // Initialisation des classes d'équivalence
-    std::vector<Liste> classes_equiv;
-    for (int i = 0; i < 16; i++) {
-      classes_equiv.push_back(Liste({i}));
-    }
-
-    // std::cout << "Initialisation des classes d'équivalence" << std::endl;
-    // for (unsigned int i = 0; i < classes_equiv.size(); i++) {
-    //   std::cout << "(" << i << ") " << classes_equiv[i] << std::endl;
-    // }
-    // std::cout << std::endl;
-
-    // std::cout << "Murs à détruire : ";
-    Melangeur murs_a_detruire(sizeof(int));
-    for (unsigned int i = 0; i < vec_murs.size(); i++) {
-      murs_a_detruire.inserer(&i);
-      // std::cout << i << " ";
-    }
-    // std::cout << std::endl;
-
-    // std::cout << "Sites a relier : ";
-    std::vector<int> site;
-    for (unsigned int i = 0; i < vec_sites.size(); i++) {
-      if (vec_sites[i].type != AUCUN) {
-        site.push_back(i);
-        // std::cout << i << " ";
-      }
-    }
-    // std::cout << std::endl;
-
-    while (!sites_relies(classes_equiv, site)) {
-
-      // afficher();
-      // for (unsigned int i = 0; i < classes_equiv.size(); i++) {
-      //   std::cout << "(" << i << ") " << classes_equiv[i] << std::endl;
-      // }
-      // std::cout << std::endl;
-
-      int indice_mur;
-      murs_a_detruire.retirer(&indice_mur);
-      // std::cout << "Mur a detruire : " << indice_mur << std::endl;
-      Mur m(indice_mur);
-      int rep_m0 = classes_equiv[m[0].index()].queue()->valeur;
-      int rep_m1 = classes_equiv[m[1].index()].queue()->valeur;
-      if ( rep_m0 < rep_m1 ) {
-        // Les deux cases n'ont pas le même représentant donc on détruit le mur pour les réunir
-        for (unsigned int i = 0; i < classes_equiv.size(); i++) {
-          int rep_mi = classes_equiv[i].queue()->valeur;
-          if ( rep_mi == rep_m1 ) classes_equiv[i].concatener(classes_equiv[m[0].index()]);
-        }
-        vec_murs[indice_mur] = false;
-      } else if ( rep_m0 > rep_m1 ) {
-        for (unsigned int i = 0; i < classes_equiv.size(); i++) {
-          int rep_mi = classes_equiv[i].queue()->valeur;
-          if ( rep_mi == rep_m0 ) classes_equiv[i].concatener(classes_equiv[m[1].index()]);
-        }
-        vec_murs[indice_mur] = false;
-      }
-    }
-*/
-  }
-
-  bool Tuile::sites_relies (const std::vector<Liste>& classes_equiv, const std::vector<int>& site) {
-    int representant = classes_equiv[site[0]].queue()->valeur;
-    // std::cout << "rep[" << site[0] << "] : " << representant << std::endl;
-    for (unsigned int i = 1; i < site.size(); i++) {
-      // std::cout << "rep[" << site[i] << "] : " << classes_equiv[site[i]].queue()->valeur << std::endl;
-      if (representant != classes_equiv[site[i]].queue()->valeur) {
-        return false;
-      }
-    }
-    return true;
   }
 
   bool Tuile::sites_relies (UnionFind& uf, const std::vector<int>& site) {
@@ -435,49 +360,23 @@ namespace MMaze {
 
   void Tuile::rotation_gauche() {
     std::vector<Site> temp_sites;
-    temp_sites.push_back(vec_sites[3]);
-    temp_sites.push_back(vec_sites[7]);
-    temp_sites.push_back(vec_sites[11]);
-    temp_sites.push_back(vec_sites[15]);
-    temp_sites.push_back(vec_sites[2]);
-    temp_sites.push_back(vec_sites[6]);
-    temp_sites.push_back(vec_sites[10]);
-    temp_sites.push_back(vec_sites[14]);
-    temp_sites.push_back(vec_sites[1]);
-    temp_sites.push_back(vec_sites[5]);
-    temp_sites.push_back(vec_sites[9]);
-    temp_sites.push_back(vec_sites[13]);
-    temp_sites.push_back(vec_sites[0]);
-    temp_sites.push_back(vec_sites[4]);
-    temp_sites.push_back(vec_sites[8]);
-    temp_sites.push_back(vec_sites[12]);
+    std::vector<bool> temp_murs;
+    for(unsigned int i = 0; i < 16; i++) {
+      temp_sites.push_back(Site(i, AUCUNE, AUCUN));
+    }
+    temp_murs.resize(vec_murs.size(), false);
+
+    for (unsigned int i = 0; i < vec_sites.size(); i++) {
+      int tmp_index = (vec_sites[i].tourne(-1)).index();
+      temp_sites[i].type = vec_sites[tmp_index].type;
+      temp_sites[i].couleur = vec_sites[tmp_index].couleur;
+    }
     vec_sites = temp_sites;
 
-    std::vector<bool> temp_murs;
-    temp_murs.push_back(vec_murs[20]);
-    temp_murs.push_back(vec_murs[21]);
-    temp_murs.push_back(vec_murs[22]);
-    temp_murs.push_back(vec_murs[23]);
-    temp_murs.push_back(vec_murs[16]);
-    temp_murs.push_back(vec_murs[17]);
-    temp_murs.push_back(vec_murs[18]);
-    temp_murs.push_back(vec_murs[19]);
-    temp_murs.push_back(vec_murs[12]);
-    temp_murs.push_back(vec_murs[13]);
-    temp_murs.push_back(vec_murs[14]);
-    temp_murs.push_back(vec_murs[15]);
-    temp_murs.push_back(vec_murs[3]);
-    temp_murs.push_back(vec_murs[2]);
-    temp_murs.push_back(vec_murs[1]);
-    temp_murs.push_back(vec_murs[0]);
-    temp_murs.push_back(vec_murs[7]);
-    temp_murs.push_back(vec_murs[6]);
-    temp_murs.push_back(vec_murs[5]);
-    temp_murs.push_back(vec_murs[4]);
-    temp_murs.push_back(vec_murs[11]);
-    temp_murs.push_back(vec_murs[10]);
-    temp_murs.push_back(vec_murs[9]);
-    temp_murs.push_back(vec_murs[8]);
+    for (unsigned int i = 0; i < vec_murs.size(); i++) {
+      int tmp_index = (Mur(i).tourne(-1)).index();
+      temp_murs[i] = vec_murs[tmp_index];
+    }
     vec_murs = temp_murs;
 
     construire_graphe();
@@ -485,49 +384,23 @@ namespace MMaze {
 
   void Tuile::rotation_droite() {
     std::vector<Site> temp_sites;
-    temp_sites.push_back(vec_sites[12]);
-    temp_sites.push_back(vec_sites[8]);
-    temp_sites.push_back(vec_sites[4]);
-    temp_sites.push_back(vec_sites[0]);
-    temp_sites.push_back(vec_sites[13]);
-    temp_sites.push_back(vec_sites[9]);
-    temp_sites.push_back(vec_sites[5]);
-    temp_sites.push_back(vec_sites[1]);
-    temp_sites.push_back(vec_sites[14]);
-    temp_sites.push_back(vec_sites[10]);
-    temp_sites.push_back(vec_sites[6]);
-    temp_sites.push_back(vec_sites[2]);
-    temp_sites.push_back(vec_sites[15]);
-    temp_sites.push_back(vec_sites[11]);
-    temp_sites.push_back(vec_sites[7]);
-    temp_sites.push_back(vec_sites[3]);
+    std::vector<bool> temp_murs;
+    for(unsigned int i = 0; i < 16; i++) {
+      temp_sites.push_back(Site(i, AUCUNE, AUCUN));
+    }
+    temp_murs.resize(vec_murs.size(), false);
+
+    for (unsigned int i = 0; i < vec_sites.size(); i++) {
+      int tmp_index = (vec_sites[i].tourne(1)).index();
+      temp_sites[i].type = vec_sites[tmp_index].type;
+      temp_sites[i].couleur = vec_sites[tmp_index].couleur;
+    }
     vec_sites = temp_sites;
 
-    std::vector<bool> temp_murs;
-    temp_murs.push_back(vec_murs[15]);
-    temp_murs.push_back(vec_murs[14]);
-    temp_murs.push_back(vec_murs[13]);
-    temp_murs.push_back(vec_murs[12]);
-    temp_murs.push_back(vec_murs[19]);
-    temp_murs.push_back(vec_murs[18]);
-    temp_murs.push_back(vec_murs[17]);
-    temp_murs.push_back(vec_murs[16]);
-    temp_murs.push_back(vec_murs[23]);
-    temp_murs.push_back(vec_murs[22]);
-    temp_murs.push_back(vec_murs[21]);
-    temp_murs.push_back(vec_murs[20]);
-    temp_murs.push_back(vec_murs[8]);
-    temp_murs.push_back(vec_murs[9]);
-    temp_murs.push_back(vec_murs[10]);
-    temp_murs.push_back(vec_murs[11]);
-    temp_murs.push_back(vec_murs[4]);
-    temp_murs.push_back(vec_murs[5]);
-    temp_murs.push_back(vec_murs[6]);
-    temp_murs.push_back(vec_murs[7]);
-    temp_murs.push_back(vec_murs[0]);
-    temp_murs.push_back(vec_murs[1]);
-    temp_murs.push_back(vec_murs[2]);
-    temp_murs.push_back(vec_murs[3]);
+    for (unsigned int i = 0; i < vec_murs.size(); i++) {
+      int tmp_index = (Mur(i).tourne(1)).index();
+      temp_murs[i] = vec_murs[tmp_index];
+    }
     vec_murs = temp_murs;
 
     construire_graphe();
