@@ -162,19 +162,19 @@ namespace MMaze {
       out << " ";
       switch (vec_sites[k].couleur) {
         case AUCUNE:
-          out << BG_DEFAULT;
+          out << TXT_DEFAULT;
           break;
         case JAUNE:
-          out << BG_JAUNE;
+          out << TXT_JAUNE;
           break;
         case ORANGE:
-          out << BG_ORANGE;
+          out << TXT_ORANGE;
           break;
         case VERT:
-          out << BG_VERT;
+          out << TXT_VERT;
           break;
         case VIOLET:
-          out << BG_VIOLET;
+          out << TXT_VIOLET;
           break;
       }
       if (vec_sites[k].type == OBJECTIF) out << "O";
