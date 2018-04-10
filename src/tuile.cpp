@@ -6,9 +6,7 @@
 
 namespace MMaze {
 
-  Tuile::Tuile(int id, bool depart) {
-    id_tuile = id;
-
+  Tuile::Tuile(int id, bool depart) : id_tuile(id), classes_cases(UnionFind(16)) {
     for(unsigned int i = 0; i < 16; i++) {
       vec_sites.push_back(Site(i, AUCUNE, AUCUN));
     }
@@ -54,16 +52,267 @@ namespace MMaze {
     }
 
     detruire_murs();
-    construire_graphe();
   }
 
   bool Tuile::mur(Mur m) const {
     return vec_murs[m.index()];
   }
 
-  bool Tuile::accessible(Case c) const {
-    /* remplacez ce code */
-    return false;
+  bool Tuile::accessible(Case c) {
+    unsigned int i = 0;
+    for (i = 0; i < vec_sites.size(); i++) {
+      if (vec_sites[i].type != AUCUN) break;
+    }
+    return classes_cases.ont_meme_classe(i, c.index());
+  }
+
+  std::ostream& operator<< (std::ostream& out, const Tuile& t) {
+    for(unsigned int i = 0; i < 4; ++i) {
+      t.afficher_horizontal(out, i);
+      out << std::endl;
+      t.afficher_vertical(out, i);
+      out << std::endl;
+    }
+    t.afficher_horizontal(out, 4);
+    return out;
+  }
+
+  void Tuile::afficher() {
+    std::cout << std::endl;
+    for(unsigned int i = 0; i < 4; ++i) {
+      afficher_horizontal(std::cout, i);
+      std::cout << std::endl;
+      afficher_vertical(std::cout, i);
+      std::cout << std::endl;
+    }
+    afficher_horizontal(std::cout, 4);
+    std::cout << std::endl;
+  }
+
+  void Tuile::sauver_dans_fichier(std::string nom) {
+    std::ofstream flux(nom, std::ios::out | std::ios::trunc);
+    if(!flux) {
+      std::cerr << "Erreur : le fichier " << nom.c_str() << " n'a pas pu être ouvert" << std::endl;
+    }
+    else {
+      flux << "tuile" << std::endl;
+      for(unsigned int i = 0; i < vec_murs.size(); i++) {
+        if(vec_murs[i]) {
+          flux << "mur " << i << std::endl;
+        }
+      }
+      for(unsigned int i = 0; i < vec_sites.size(); i++) {
+        if(vec_sites[i].type != AUCUN) {
+          flux << "site " << i << " ";
+
+          switch(vec_sites[i].type) {
+            case PORTE:
+              flux << "porte ";
+              break;
+            case OBJECTIF:
+              flux << "objectif ";
+              break;
+            case SORTIE:
+              flux << "sortie ";
+              break;
+            case POINT_DEPART:
+              flux << "depart ";
+              break;
+            default:
+              break;
+          }
+
+          switch(vec_sites[i].couleur) {
+            case AUCUNE:
+              flux << "aucune ";
+              break;
+            case JAUNE:
+              flux << "jaune ";
+              break;
+            case VERT:
+              flux << "vert ";
+              break;
+            case ORANGE:
+              flux << "orange ";
+              break;
+            case VIOLET:
+              flux << "violet ";
+              break;
+          }
+
+          flux << std::endl;
+        }
+      }
+      flux << "fin";
+      flux.close();
+    }
+  }
+
+  void Tuile::lire_dans_fichier(std::string nom) {
+    std::ifstream flux(nom, std::ios::in);
+    if(!flux) {
+      std::cerr << "Erreur : le fichier " << nom.c_str() << " n'a pas pu être ouvert" << std::endl;
+    }
+    else {
+      reset_tuile();
+      std::string tuile;
+      flux >> tuile;
+      std::string element;
+      flux >> element;
+      while (element != "fin") {
+        if (element == "mur") {
+          int pos_mur;
+          flux >> pos_mur;
+          vec_murs[pos_mur] = true;
+        }
+        else if (element == "site") {
+          int pos_site;
+          std::string type_site;
+          std::string couleur_site;
+          flux >> pos_site >> type_site >> couleur_site;
+
+          Type t = AUCUN;
+          if (type_site == "porte") t = PORTE;
+          if (type_site == "depart") t = POINT_DEPART;
+          if (type_site == "objectif") t = OBJECTIF;
+          if (type_site == "sortie") t = SORTIE;
+
+          Couleur c = AUCUNE;
+          if (couleur_site == "orange") c = ORANGE;
+          if (couleur_site == "violet") c = VIOLET;
+          if (couleur_site == "jaune") c = JAUNE;
+          if (couleur_site == "vert") c = VERT;
+          if (couleur_site == "aucune") c = AUCUNE;
+
+          modifier_site(pos_site, t, c);
+        }
+        flux >> element;
+      }
+      flux.close();
+    }
+
+  }
+
+  void Tuile::placer_autre_site(const Type & t, const Couleur & c) {
+    Melangeur places_restantes(sizeof(unsigned int));
+    for (unsigned int i = 0; i < 16; i++) {
+      if (vec_sites[i].type == AUCUN) {
+        places_restantes.inserer(&i);
+      }
+    }
+    unsigned int pos;
+    places_restantes.retirer(&pos);
+    modifier_site(pos, t, c);
+    detruire_murs();
+  }
+
+  void Tuile::construire_graphe() {
+    
+  }
+
+  void Tuile::rotation_gauche() {
+    std::vector<Site> temp_sites;
+    std::vector<bool> temp_murs;
+    for(unsigned int i = 0; i < 16; i++) {
+      temp_sites.push_back(Site(i, AUCUNE, AUCUN));
+    }
+    temp_murs.resize(vec_murs.size(), false);
+
+    for (unsigned int i = 0; i < vec_sites.size(); i++) {
+      int tmp_index = (vec_sites[i].tourne(-1)).index();
+      temp_sites[i].type = vec_sites[tmp_index].type;
+      temp_sites[i].couleur = vec_sites[tmp_index].couleur;
+    }
+    vec_sites = temp_sites;
+
+    for (unsigned int i = 0; i < vec_murs.size(); i++) {
+      int tmp_index = (Mur(i).tourne(-1)).index();
+      temp_murs[i] = vec_murs[tmp_index];
+    }
+    vec_murs = temp_murs;
+
+    construire_graphe();
+  }
+
+  void Tuile::rotation_droite() {
+    std::vector<Site> temp_sites;
+    std::vector<bool> temp_murs;
+    for(unsigned int i = 0; i < 16; i++) {
+      temp_sites.push_back(Site(i, AUCUNE, AUCUN));
+    }
+    temp_murs.resize(vec_murs.size(), false);
+
+    for (unsigned int i = 0; i < vec_sites.size(); i++) {
+      int tmp_index = (vec_sites[i].tourne(1)).index();
+      temp_sites[i].type = vec_sites[tmp_index].type;
+      temp_sites[i].couleur = vec_sites[tmp_index].couleur;
+    }
+    vec_sites = temp_sites;
+
+    for (unsigned int i = 0; i < vec_murs.size(); i++) {
+      int tmp_index = (Mur(i).tourne(1)).index();
+      temp_murs[i] = vec_murs[tmp_index];
+    }
+    vec_murs = temp_murs;
+
+    construire_graphe();
+  }
+
+  /* ----------------------------------------------------------------------- */
+
+  void Tuile::modifier_site(unsigned int pos, const Type & t, const Couleur & c) {
+    vec_sites[pos].type = t;
+    vec_sites[pos].couleur = c;
+  }
+
+  void Tuile::detruire_murs() {
+    UnionFind uf(16);
+    std::vector<int> sites;
+    for (unsigned int i = 0; i < vec_sites.size(); i++) {
+      if (vec_sites[i].type != AUCUN) {
+        sites.push_back(i);
+      }
+    }
+    relier_sites(uf, sites);
+    // eliminer_impasses(uf, sites);
+    update_classes_cases();
+  }
+
+  void Tuile::relier_sites(UnionFind& uf, std::vector<int> sites) {
+    Melangeur murs_a_detruire(sizeof(int));
+    for (unsigned int i = 0; i < vec_murs.size(); i++) {
+      vec_murs[i] = true;
+      murs_a_detruire.inserer(&i);
+    }
+    while (!uf.ont_meme_classe(sites)) {
+      int indice_mur;
+      murs_a_detruire.retirer(&indice_mur);
+      Mur m(indice_mur);
+
+      int c0 = m[0].index(); // la case d'un côté du mur
+      int c1 = m[1].index(); // la case de l'autre côté du mur
+      bool union_effectuee = uf.union_classes(c0, c1);
+      if (union_effectuee) {
+        vec_murs[indice_mur] = false;
+      }
+    }
+  }
+
+  void Tuile::eliminer_impasses(UnionFind& uf, std::vector<int> sites) {
+
+  }
+
+  void Tuile::update_classes_cases() {
+    UnionFind uf(16);
+    for (unsigned int i = 0; i < vec_murs.size(); i++) {
+      if (!vec_murs[i]) {
+        Mur m(i);
+        uf.union_classes(m[0].index(), m[1].index());
+      }
+    }
+    uf.compression_chemins();
+    // uf.afficher();
+    classes_cases = uf;
   }
 
   void Tuile::afficher_horizontal(std::ostream& out, unsigned int i) const {
@@ -216,133 +465,6 @@ namespace MMaze {
     } else out << "|";
   }
 
-  std::ostream& operator<< (std::ostream& out, const Tuile& t) {
-    for(unsigned int i = 0; i < 4; ++i) {
-      t.afficher_horizontal(out, i);
-      out << std::endl;
-      t.afficher_vertical(out, i);
-      out << std::endl;
-    }
-    t.afficher_horizontal(out, 4);
-    return out;
-  }
-
-  void Tuile::afficher() {
-    std::cout << std::endl;
-    for(unsigned int i = 0; i < 4; ++i) {
-      afficher_horizontal(std::cout, i);
-      std::cout << std::endl;
-      afficher_vertical(std::cout, i);
-      std::cout << std::endl;
-    }
-    afficher_horizontal(std::cout, 4);
-    std::cout << std::endl;
-  }
-
-  void Tuile::sauver_dans_fichier(std::string nom) {
-    std::ofstream flux(nom, std::ios::out | std::ios::trunc);
-    if(!flux) {
-      std::cerr << "Erreur : le fichier " << nom.c_str() << " n'a pas pu être ouvert" << std::endl;
-    }
-    else {
-      flux << "tuile" << std::endl;
-      for(unsigned int i = 0; i < vec_murs.size(); i++) {
-        if(vec_murs[i]) {
-          flux << "mur " << i << std::endl;
-        }
-      }
-      for(unsigned int i = 0; i < vec_sites.size(); i++) {
-        if(vec_sites[i].type != AUCUN) {
-          flux << "site " << i << " ";
-
-          switch(vec_sites[i].type) {
-            case PORTE:
-              flux << "porte ";
-              break;
-            case OBJECTIF:
-              flux << "objectif ";
-              break;
-            case SORTIE:
-              flux << "sortie ";
-              break;
-            case POINT_DEPART:
-              flux << "depart ";
-              break;
-            default:
-              break;
-          }
-
-          switch(vec_sites[i].couleur) {
-            case AUCUNE:
-              flux << "aucune ";
-              break;
-            case JAUNE:
-              flux << "jaune ";
-              break;
-            case VERT:
-              flux << "vert ";
-              break;
-            case ORANGE:
-              flux << "orange ";
-              break;
-            case VIOLET:
-              flux << "violet ";
-              break;
-          }
-
-          flux << std::endl;
-        }
-      }
-      flux << "fin";
-      flux.close();
-    }
-  }
-
-  void Tuile::lire_dans_fichier(std::string nom) {
-    std::ifstream flux(nom, std::ios::in);
-    if(!flux) {
-      std::cerr << "Erreur : le fichier " << nom.c_str() << " n'a pas pu être ouvert" << std::endl;
-    }
-    else {
-      reset_tuile();
-      std::string tuile;
-      flux >> tuile;
-      std::string element;
-      flux >> element;
-      while (element != "fin") {
-        if (element == "mur") {
-          int pos_mur;
-          flux >> pos_mur;
-          vec_murs[pos_mur] = true;
-        }
-        else if (element == "site") {
-          int pos_site;
-          std::string type_site;
-          std::string couleur_site;
-          flux >> pos_site >> type_site >> couleur_site;
-
-          Type t = AUCUN;
-          if (type_site == "porte") t = PORTE;
-          if (type_site == "depart") t = POINT_DEPART;
-          if (type_site == "objectif") t = OBJECTIF;
-          if (type_site == "sortie") t = SORTIE;
-
-          Couleur c = AUCUNE;
-          if (couleur_site == "orange") c = ORANGE;
-          if (couleur_site == "violet") c = VIOLET;
-          if (couleur_site == "jaune") c = JAUNE;
-          if (couleur_site == "vert") c = VERT;
-          if (couleur_site == "aucune") c = AUCUNE;
-
-          modifier_site(pos_site, t, c);
-        }
-        flux >> element;
-      }
-      flux.close();
-    }
-
-  }
-
   void Tuile::reset_tuile() {
     for (unsigned int i = 0; i < vec_sites.size(); i++) {
       modifier_site(i, AUCUN, AUCUNE);
@@ -352,147 +474,6 @@ namespace MMaze {
     }
   }
 
-  void Tuile::modifier_site(unsigned int pos, const Type & t, const Couleur & c) {
-    vec_sites[pos].type = t;
-    vec_sites[pos].couleur = c;
-  }
 
-  void Tuile::placer_autre_site(const Type & t, const Couleur & c) {
-    Melangeur places_restantes(sizeof(unsigned int));
-    for (unsigned int i = 0; i < 16; i++) {
-      if (vec_sites[i].type == AUCUN) {
-        places_restantes.inserer(&i);
-      }
-    }
-    unsigned int pos;
-    places_restantes.retirer(&pos);
-    modifier_site(pos, t, c);
-    detruire_murs();
-  }
-
-  void Tuile::detruire_murs() {
-    UnionFind uf(16);
-    std::vector<int> sites;
-    for (unsigned int i = 0; i < vec_sites.size(); i++) {
-      if (vec_sites[i].type != AUCUN) {
-        sites.push_back(i);
-      }
-    }
-    relier_sites(uf, sites);
-    // eliminer_impasses(uf, sites);
-  }
-
-  void Tuile::relier_sites(UnionFind& uf, std::vector<int> sites) {
-    Melangeur murs_a_detruire(sizeof(int));
-    for (unsigned int i = 0; i < vec_murs.size(); i++) {
-      vec_murs[i] = true;
-      murs_a_detruire.inserer(&i);
-    }
-    while (!uf.ont_meme_classe(sites)) {
-      int indice_mur;
-      murs_a_detruire.retirer(&indice_mur);
-      Mur m(indice_mur);
-
-      int rep_c0 = uf.find_rep(m[0].index()); // représentant de la case d'un côté du mur
-      int rep_c1 = uf.find_rep(m[1].index()); // représentant de la case de l'autre côté du mur
-      if (rep_c0 != rep_c1) {
-        uf.union_classes(rep_c0, rep_c1);
-        vec_murs[indice_mur] = false;
-      }
-    }
-  }
-
-  void Tuile::eliminer_impasses(UnionFind& uf, std::vector<int> sites) {
-    std::vector<int> impasses = reste_impasses();
-    while (impasses.size() != 0) {
-      for (unsigned int i = 0; i < impasses.size(); i++) {
-        if ( (i < 4) ? false : !mur(Mur(vec_sites[i], vec_sites[i].haut())) ) {
-          vec_murs[Mur(vec_sites[i], vec_sites[i].haut()).index()] = true;
-        }
-        if ( (i > 11) ? true : mur(Mur(vec_sites[i], vec_sites[i].bas())) ) {
-          vec_murs[Mur(vec_sites[i], vec_sites[i].bas()).index()] = true;
-        }
-        if ( (i%4 == 0) ? true : mur(Mur(vec_sites[i], vec_sites[i].gauche())) ) {
-          vec_murs[Mur(vec_sites[i], vec_sites[i].gauche()).index()] = true;
-        }
-        if ( (i%4 == 3) ? true : mur(Mur(vec_sites[i], vec_sites[i].droite())) ) {
-          vec_murs[Mur(vec_sites[i], vec_sites[i].droite()).index()] = true;
-        }
-      }
-      impasses = reste_impasses();
-    }
-    
-  }
-
-  std::vector<int> Tuile::reste_impasses() {
-    std::vector<int> impasses;
-    for (unsigned int i = 0; i < vec_sites.size(); i++) {
-      if (vec_sites[i].type == AUCUN) {
-        std::vector<bool> murs;
-        murs.push_back( (i < 4) ? true : mur(Mur(vec_sites[i], vec_sites[i].haut())) );
-        murs.push_back( (i > 11) ? true : mur(Mur(vec_sites[i], vec_sites[i].bas())) );
-        murs.push_back( (i%4 == 0) ? true : mur(Mur(vec_sites[i], vec_sites[i].gauche())) );
-        murs.push_back( (i%4 == 3) ? true : mur(Mur(vec_sites[i], vec_sites[i].droite())) );
-        int nb_murs_up = 0;
-        for (unsigned int i = 0; i < murs.size(); i++) {
-          if (murs[i]) nb_murs_up++;
-        }
-        if (nb_murs_up == 3) impasses.push_back(i);
-      }
-    }
-    return impasses;
-  }
-
-  void Tuile::construire_graphe() {
-    
-  }
-
-  void Tuile::rotation_gauche() {
-    std::vector<Site> temp_sites;
-    std::vector<bool> temp_murs;
-    for(unsigned int i = 0; i < 16; i++) {
-      temp_sites.push_back(Site(i, AUCUNE, AUCUN));
-    }
-    temp_murs.resize(vec_murs.size(), false);
-
-    for (unsigned int i = 0; i < vec_sites.size(); i++) {
-      int tmp_index = (vec_sites[i].tourne(-1)).index();
-      temp_sites[i].type = vec_sites[tmp_index].type;
-      temp_sites[i].couleur = vec_sites[tmp_index].couleur;
-    }
-    vec_sites = temp_sites;
-
-    for (unsigned int i = 0; i < vec_murs.size(); i++) {
-      int tmp_index = (Mur(i).tourne(-1)).index();
-      temp_murs[i] = vec_murs[tmp_index];
-    }
-    vec_murs = temp_murs;
-
-    construire_graphe();
-  }
-
-  void Tuile::rotation_droite() {
-    std::vector<Site> temp_sites;
-    std::vector<bool> temp_murs;
-    for(unsigned int i = 0; i < 16; i++) {
-      temp_sites.push_back(Site(i, AUCUNE, AUCUN));
-    }
-    temp_murs.resize(vec_murs.size(), false);
-
-    for (unsigned int i = 0; i < vec_sites.size(); i++) {
-      int tmp_index = (vec_sites[i].tourne(1)).index();
-      temp_sites[i].type = vec_sites[tmp_index].type;
-      temp_sites[i].couleur = vec_sites[tmp_index].couleur;
-    }
-    vec_sites = temp_sites;
-
-    for (unsigned int i = 0; i < vec_murs.size(); i++) {
-      int tmp_index = (Mur(i).tourne(1)).index();
-      temp_murs[i] = vec_murs[tmp_index];
-    }
-    vec_murs = temp_murs;
-
-    construire_graphe();
-  }
 
 } //end of namespace MMaze

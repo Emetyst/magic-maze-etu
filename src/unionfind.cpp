@@ -17,6 +17,11 @@ namespace MMaze {
         }
     }
 
+    UnionFind& UnionFind::operator=(const UnionFind& autre) {
+        classe_equiv = autre.classe_equiv;
+        return *this;
+    }
+
     UnionFind::~UnionFind() {
         classe_equiv.clear();
     }
@@ -28,20 +33,24 @@ namespace MMaze {
         return classe_equiv[n].representant;
     }
 
-    void UnionFind::union_classes(int rep_n1, int rep_n2) {
-        // int rep_n1 = find_rep(n1);
-        // int rep_n2 = find_rep(n2);
-        // if (rep_n1 != rep_n2) {
-        if (classe_equiv[rep_n1].hauteur < classe_equiv[rep_n2].hauteur) {
-            classe_equiv[rep_n1].representant = rep_n2;
-        } else {
-            classe_equiv[rep_n2].representant = rep_n1;
-            if (classe_equiv[rep_n1].hauteur == classe_equiv[rep_n2].hauteur) {
-                classe_equiv[rep_n1].hauteur++;
+    bool UnionFind::union_classes(int n1, int n2) {
+        int rep_n1 = find_rep(n1);
+        int rep_n2 = find_rep(n2);
+        if (rep_n1 != rep_n2) {
+            if (classe_equiv[rep_n1].hauteur < classe_equiv[rep_n2].hauteur) {
+                classe_equiv[rep_n1].representant = rep_n2;
+            } else {
+                classe_equiv[rep_n2].representant = rep_n1;
+                if (classe_equiv[rep_n1].hauteur == classe_equiv[rep_n2].hauteur) {
+                    classe_equiv[rep_n1].hauteur++;
+                }
             }
-        }
-        //     return true; // Une union a été effectuée
-        // } else return false; // Les deux noeuds sont dans la même classe donc pas d'union
+            return true; // Une union a été effectuée
+        } else return false; // Les deux noeuds sont dans la même classe donc pas d'union
+    }
+
+    bool UnionFind::ont_meme_classe(int n1, int n2) {
+        return (find_rep(n1) == find_rep(n2));
     }
 
     bool UnionFind::ont_meme_classe(const std::vector<int>& n) {
@@ -62,6 +71,21 @@ namespace MMaze {
     void UnionFind::compression_chemins() {
         for (unsigned int i = 0; i < classe_equiv.size(); i++) {
             classe_equiv[i].representant = find_rep(i);
+        }
+    }
+
+    void UnionFind::afficher() {
+        std::cout << std::endl;
+        compression_chemins();
+        std::vector<Liste> classes;
+        classes.resize(classe_equiv.size());
+        for (unsigned int i = 0; i < classe_equiv.size(); i++) {
+            classes[find_rep(i)].ajouter_en_queue(i);
+        }
+        for (unsigned int i = 0; i < classes.size(); i++) {
+            if (classes[i].taille() > 0) {
+                std::cout << "classe(" << i << ") : " << classes[i] << std::endl;
+            }
         }
     }
 
