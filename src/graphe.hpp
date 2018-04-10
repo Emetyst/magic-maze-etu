@@ -17,8 +17,6 @@ namespace MMaze {
       void ajouter_arete(Noeud* x, Noeud* y);
       void supprimer_arete(Noeud* x, Noeud* y);
 
-
-
     private:
       std::vector<std::vector<Noeud*>> noeuds;
   };

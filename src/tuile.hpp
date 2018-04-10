@@ -6,6 +6,7 @@
 #include "site.hpp"
 #include "liste.hpp"
 #include "unionfind.hpp"
+#include "direction.hpp"
 
 #include <fstream>
 #include <string>
@@ -36,6 +37,8 @@ namespace MMaze {
       void rotation_gauche();
       void rotation_droite();
 
+      void construire_graphe();
+
     private:
       std::vector<Site> vec_sites;
       std::vector<bool> vec_murs;
@@ -45,9 +48,10 @@ namespace MMaze {
       void afficher_horizontal(std::ostream& out, unsigned int i) const;
       void afficher_vertical(std::ostream& out, unsigned int i) const;
       void detruire_murs();
-      void eliminer_impasses();
-      void construire_graphe();
+      void relier_sites(UnionFind& uf, std::vector<int> sites);
+      void eliminer_impasses(UnionFind& uf, std::vector<int> sites);
       void reset_tuile();
+      std::vector<int> reste_impasses();
 
   };
 

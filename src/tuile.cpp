@@ -54,7 +54,6 @@ namespace MMaze {
     }
 
     detruire_murs();
-    eliminer_impasses();
     construire_graphe();
   }
 
@@ -373,18 +372,22 @@ namespace MMaze {
 
   void Tuile::detruire_murs() {
     UnionFind uf(16);
-    Melangeur murs_a_detruire(sizeof(int));
-    for (unsigned int i = 0; i < vec_murs.size(); i++) {
-      vec_murs[i] = true;
-      murs_a_detruire.inserer(&i);
-    }
     std::vector<int> sites;
     for (unsigned int i = 0; i < vec_sites.size(); i++) {
       if (vec_sites[i].type != AUCUN) {
         sites.push_back(i);
       }
     }
+    relier_sites(uf, sites);
+    // eliminer_impasses(uf, sites);
+  }
 
+  void Tuile::relier_sites(UnionFind& uf, std::vector<int> sites) {
+    Melangeur murs_a_detruire(sizeof(int));
+    for (unsigned int i = 0; i < vec_murs.size(); i++) {
+      vec_murs[i] = true;
+      murs_a_detruire.inserer(&i);
+    }
     while (!uf.ont_meme_classe(sites)) {
       int indice_mur;
       murs_a_detruire.retirer(&indice_mur);
@@ -397,12 +400,47 @@ namespace MMaze {
         vec_murs[indice_mur] = false;
       }
     }
+  }
 
+  void Tuile::eliminer_impasses(UnionFind& uf, std::vector<int> sites) {
+    std::vector<int> impasses = reste_impasses();
+    while (impasses.size() != 0) {
+      for (unsigned int i = 0; i < impasses.size(); i++) {
+        if ( (i < 4) ? false : !mur(Mur(vec_sites[i], vec_sites[i].haut())) ) {
+          vec_murs[Mur(vec_sites[i], vec_sites[i].haut()).index()] = true;
+        }
+        if ( (i > 11) ? true : mur(Mur(vec_sites[i], vec_sites[i].bas())) ) {
+          vec_murs[Mur(vec_sites[i], vec_sites[i].bas()).index()] = true;
+        }
+        if ( (i%4 == 0) ? true : mur(Mur(vec_sites[i], vec_sites[i].gauche())) ) {
+          vec_murs[Mur(vec_sites[i], vec_sites[i].gauche()).index()] = true;
+        }
+        if ( (i%4 == 3) ? true : mur(Mur(vec_sites[i], vec_sites[i].droite())) ) {
+          vec_murs[Mur(vec_sites[i], vec_sites[i].droite()).index()] = true;
+        }
+      }
+      impasses = reste_impasses();
+    }
     
   }
 
-  void Tuile::eliminer_impasses() {
-    
+  std::vector<int> Tuile::reste_impasses() {
+    std::vector<int> impasses;
+    for (unsigned int i = 0; i < vec_sites.size(); i++) {
+      if (vec_sites[i].type == AUCUN) {
+        std::vector<bool> murs;
+        murs.push_back( (i < 4) ? true : mur(Mur(vec_sites[i], vec_sites[i].haut())) );
+        murs.push_back( (i > 11) ? true : mur(Mur(vec_sites[i], vec_sites[i].bas())) );
+        murs.push_back( (i%4 == 0) ? true : mur(Mur(vec_sites[i], vec_sites[i].gauche())) );
+        murs.push_back( (i%4 == 3) ? true : mur(Mur(vec_sites[i], vec_sites[i].droite())) );
+        int nb_murs_up = 0;
+        for (unsigned int i = 0; i < murs.size(); i++) {
+          if (murs[i]) nb_murs_up++;
+        }
+        if (nb_murs_up == 3) impasses.push_back(i);
+      }
+    }
+    return impasses;
   }
 
   void Tuile::construire_graphe() {

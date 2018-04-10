@@ -24,11 +24,10 @@ namespace MMaze {
             int find_rep(int n);
             void union_classes(int n1, int n2);
             bool ont_meme_classe(const std::vector<int>& n);
+            void compression_chemins();
 
         private:
             std::vector<ClasseEquiv> classe_equiv;
-
-            void compression_chemins();
     };
 
 }
