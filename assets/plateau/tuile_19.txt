@@ -1,14 +1,15 @@
 tuile
-mur 0
-mur 2
-mur 6
+mur 1
+mur 3
+mur 5
 mur 8
+mur 9
+mur 10
+mur 13
 mur 14
-mur 15
-mur 19
-mur 21
+mur 20
 mur 22
-mur 23
-site 11 porte violet 
+site 4 porte violet 
+site 11 porte jaune 
 site 13 porte aucune 
 fin

@@ -38,7 +38,8 @@ int main() {
   t_depart.sauver_dans_fichier("../assets/tuile_depart.txt");
 
   Plateau p;
-  p.sauver_plateau_dans_dossier("../assets/plateau/");
+  p.afficher_tuiles();
+  // p.sauver_plateau_dans_dossier("../assets/plateau/");
 
   return 0;
 }

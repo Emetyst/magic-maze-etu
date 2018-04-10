@@ -5,6 +5,7 @@
 #include "melangeur.hpp"
 #include "site.hpp"
 #include "liste.hpp"
+#include "unionfind.hpp"
 
 #include <fstream>
 #include <cstring>
@@ -43,8 +44,10 @@ namespace MMaze {
       void afficher_horizontal(std::ostream& out, unsigned int i) const;
       void afficher_vertical(std::ostream& out, unsigned int i) const;
       void detruire_murs();
+      void eliminer_impasses();
       void construire_graphe();
       bool sites_relies (const std::vector<Liste>& classes_equiv, const std::vector<int>& indices_sites);
+      bool sites_relies (const std::vector<ClasseEquiv>& classes_equiv, const std::vector<int>& indices_sites);
 
   };
 

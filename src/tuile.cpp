@@ -54,6 +54,7 @@ namespace MMaze {
     }
 
     detruire_murs();
+    eliminer_impasses();
     construire_graphe();
   }
 
@@ -157,7 +158,30 @@ namespace MMaze {
     } else out << "|";
 
     for(unsigned int m = 0; m < 4; ++m) {
-      out << "   ";
+      int k = (4 * i) + m;
+      out << " ";
+      switch (vec_sites[k].couleur) {
+        case AUCUNE:
+          out << BG_DEFAULT;
+          break;
+        case JAUNE:
+          out << BG_JAUNE;
+          break;
+        case ORANGE:
+          out << BG_ORANGE;
+          break;
+        case VERT:
+          out << BG_VERT;
+          break;
+        case VIOLET:
+          out << BG_VIOLET;
+          break;
+      }
+      if (vec_sites[k].type == OBJECTIF) out << "O";
+      else if (vec_sites[k].type == SORTIE) out << "S";
+      else if (vec_sites[k].type == POINT_DEPART) out << "D";
+      else out << TXT_CLEAR << " ";
+      out << TXT_CLEAR << " ";      
       if(m < 3) {
         Case left = Case(i, m);
         Case right = Case(i, m+1);
@@ -293,6 +317,30 @@ namespace MMaze {
   }
 
   void Tuile::detruire_murs() {
+    UnionFind uf(16);
+    Melangeur murs_a_detruire(sizeof(int));
+    for (unsigned int i = 0; i < vec_murs.size(); i++) {
+      murs_a_detruire.inserer(&i);
+    }
+    std::vector<int> indices_sites;
+    for (unsigned int i = 0; i < vec_sites.size(); i++) {
+      if (vec_sites[i].type != AUCUN) {
+        indices_sites.push_back(i);
+      }
+    }
+
+    while (!sites_relies(uf.classe_equiv, indices_sites) && murs_a_detruire.taille() > 0) {
+      int indice_mur;
+      murs_a_detruire.retirer(&indice_mur);
+      Mur m(indice_mur);
+      bool union_effectuee = uf.union_classes(m[0].index(), m[1].index());
+      if (union_effectuee) {
+        vec_murs[indice_mur] = false;
+      }
+    }
+
+
+/*
     // Initialisation des classes d'équivalence
     std::vector<Liste> classes_equiv;
     for (int i = 0; i < 16; i++) {
@@ -352,6 +400,7 @@ namespace MMaze {
         vec_murs[indice_mur] = false;
       }
     }
+*/
   }
 
   bool Tuile::sites_relies (const std::vector<Liste>& classes_equiv, const std::vector<int>& indices_sites) {
@@ -364,6 +413,20 @@ namespace MMaze {
       }
     }
     return true;
+  }
+
+  bool Tuile::sites_relies (const std::vector<ClasseEquiv>& classes_equiv, const std::vector<int>& indices_sites) {
+    int representant = classes_equiv[indices_sites[0]].representant;
+    for (unsigned int i = 1; i < indices_sites.size(); i++) {
+      if (representant != classes_equiv[indices_sites[i]].representant) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  void Tuile::eliminer_impasses() {
+    
   }
 
   void Tuile::construire_graphe() {

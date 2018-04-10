@@ -15,6 +15,12 @@ namespace MMaze {
 
       void sauver_plateau_dans_dossier(std::string nom_dossier);
 
+      void afficher_tuiles() {
+        for (unsigned int i = 0; i < ensemble_tuiles.size(); i++) {
+          ensemble_tuiles[i]->afficher();
+        }
+      }
+
     private:
       Melangeur* pioche_tuiles;
       std::vector<Tuile*> ensemble_tuiles;

@@ -3,15 +3,15 @@ mur 0
 mur 2
 mur 4
 mur 6
-mur 9
+mur 7
+mur 10
 mur 12
 mur 14
-mur 17
-mur 18
-mur 23
-site 2 porte vert 
-site 3 sortie jaune 
-site 4 porte orange 
-site 11 porte violet 
+mur 19
+mur 20
+site 2 porte orange 
+site 4 porte jaune 
+site 11 porte vert 
 site 13 porte aucune 
+site 14 sortie jaune 
 fin

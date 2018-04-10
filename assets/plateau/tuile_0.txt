@@ -1,16 +1,13 @@
 tuile
-mur 0
 mur 4
-mur 5
+mur 6
 mur 7
-mur 8
-mur 9
-mur 12
-mur 14
-mur 17
-mur 20
+mur 13
+mur 15
+mur 16
+mur 19
 mur 21
-mur 23
+mur 22
 site 2 porte orange 
 site 4 porte violet 
 site 5 depart violet 
