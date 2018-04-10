@@ -23,29 +23,29 @@ int main() {
     
 
   //utilisation des couleurs
-  std::cout
-    << TXT_JAUNE << "&"
-    << TXT_ORANGE << "&"
-    << TXT_VERT << "&"
-    << TXT_VIOLET << "&"
-    << TXT_CLEAR
-    << BG_JAUNE << "&"
-    << BG_ORANGE << "&"
-    << BG_VERT << "&"
-    << BG_VIOLET << "&"
-    << TXT_CLEAR
-    << std::endl;
+  // std::cout
+  //   << TXT_JAUNE << "&"
+  //   << TXT_ORANGE << "&"
+  //   << TXT_VERT << "&"
+  //   << TXT_VIOLET << "&"
+  //   << TXT_CLEAR
+  //   << BG_JAUNE << "&"
+  //   << BG_ORANGE << "&"
+  //   << BG_VERT << "&"
+  //   << BG_VIOLET << "&"
+  //   << TXT_CLEAR
+  //   << std::endl;
   
-  // t.sauver_dans_fichier("../assets/test_ecriture_tuile.txt");
-  // t_depart.sauver_dans_fichier("../assets/tuile_depart.txt");
+  t.sauver_dans_fichier("../assets/tuile_classique.txt");
+  t_depart.sauver_dans_fichier("../assets/tuile_depart.txt");
 
   // Plateau p;
   // p.afficher_tuiles();
   // p.sauver_plateau_dans_dossier("../assets/plateau/");
 
-  Tuile t_fichier;
-  t_fichier.lire_dans_fichier("../assets/MMaze_tests/tuile_0.txt");
-  std::cout << std::endl << std::endl << "Tuile t_fichier" << std::endl << t_fichier << std::endl;
+  // Tuile t_fichier;
+  // t_fichier.lire_dans_fichier("../assets/MMaze_tests/tuile_0.txt");
+  // std::cout << std::endl << std::endl << "Tuile t_fichier" << std::endl << t_fichier << std::endl;
 
   return 0;
 }

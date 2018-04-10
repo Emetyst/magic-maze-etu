@@ -47,7 +47,6 @@ namespace MMaze {
       void detruire_murs();
       void eliminer_impasses();
       void construire_graphe();
-      bool sites_relies(UnionFind& uf, const std::vector<int>& site);
       void reset_tuile();
 
   };

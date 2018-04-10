@@ -368,40 +368,37 @@ namespace MMaze {
     unsigned int pos;
     places_restantes.retirer(&pos);
     modifier_site(pos, t, c);
+    detruire_murs();
   }
 
   void Tuile::detruire_murs() {
     UnionFind uf(16);
     Melangeur murs_a_detruire(sizeof(int));
     for (unsigned int i = 0; i < vec_murs.size(); i++) {
+      vec_murs[i] = true;
       murs_a_detruire.inserer(&i);
     }
-    std::vector<int> site;
+    std::vector<int> sites;
     for (unsigned int i = 0; i < vec_sites.size(); i++) {
       if (vec_sites[i].type != AUCUN) {
-        site.push_back(i);
+        sites.push_back(i);
       }
     }
 
-    while (!sites_relies(uf, site)) {
+    while (!uf.ont_meme_classe(sites)) {
       int indice_mur;
       murs_a_detruire.retirer(&indice_mur);
       Mur m(indice_mur);
-      bool union_effectuee = uf.union_classes(m[0].index(), m[1].index());
-      if (union_effectuee) {
+
+      int rep_c0 = uf.find_rep(m[0].index()); // représentant de la case d'un côté du mur
+      int rep_c1 = uf.find_rep(m[1].index()); // représentant de la case de l'autre côté du mur
+      if (rep_c0 != rep_c1) {
+        uf.union_classes(rep_c0, rep_c1);
         vec_murs[indice_mur] = false;
       }
     }
-  }
 
-  bool Tuile::sites_relies (UnionFind& uf, const std::vector<int>& site) {
-    int representant = uf.find_rep(site[0]);
-    for (unsigned int i = 1; i < site.size(); i++) {
-      if (representant != uf.find_rep(site[i])) {
-        return false;
-      }
-    }
-    return true;
+    
   }
 
   void Tuile::eliminer_impasses() {

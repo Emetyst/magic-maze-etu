@@ -22,9 +22,13 @@ namespace MMaze {
             ~UnionFind();
 
             int find_rep(int n);
-            bool union_classes(int n1, int n2);
+            void union_classes(int n1, int n2);
+            bool ont_meme_classe(const std::vector<int>& n);
 
+        private:
             std::vector<ClasseEquiv> classe_equiv;
+
+            void compression_chemins();
     };
 
 }
