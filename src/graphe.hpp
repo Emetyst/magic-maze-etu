@@ -4,6 +4,9 @@
 #include "noeud.hpp"
 #include "arete.hpp"
 
+#include <limits>
+#include <queue>
+
 namespace MMaze {
 
   class Graphe {
@@ -28,9 +31,13 @@ namespace MMaze {
 
       void afficher();
 
+      void Dijkstra(std::vector<int>& distance, std::vector<Noeud*>& predecesseur);
+
     private:
       std::vector<Noeud*> noeuds;
       unsigned int compteur_aretes;
+
+      void init_dijkstra(std::vector<int>& distance, std::vector<Noeud*>& predecesseur);
   };
 }
 

@@ -21,11 +21,12 @@ namespace MMaze {
 
       void afficher_graphe();
 
+      Graphe g;
+
     private:
       Melangeur* pioche_tuiles;
       std::vector<Tuile*> ensemble_tuiles;
       std::vector<int> tuiles_placees;
-      Graphe g;
 
       std::vector<bool> objectifs_trouves;
       std::vector<bool> sorties_trouvees;

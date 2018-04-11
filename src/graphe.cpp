@@ -98,4 +98,18 @@ namespace MMaze {
     std::cout << std::endl;    
   }
 
+  void Graphe::Dijkstra(std::vector<int>& distance, std::vector<Noeud*>& predecesseur) {
+    init_dijkstra(distance, predecesseur);
+    
+  }
+
+  /* --------------------------------------------------------- */
+
+  void Graphe::init_dijkstra(std::vector<int>& distance, std::vector<Noeud*>& predecesseur) {
+    distance.clear();
+    predecesseur.clear();
+    distance.resize(nb_noeuds(), std::numeric_limits<int>::max());
+    predecesseur.resize(nb_noeuds(), nullptr);
+  }
+
 }
