@@ -1,6 +1,7 @@
 src/test_melangeur
 src/test_tuile
 src/test_liste
+src/test_plateau
 \.vscode/
 *.d
 *.o

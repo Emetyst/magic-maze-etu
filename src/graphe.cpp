@@ -73,8 +73,10 @@ namespace MMaze {
   }
 
   void Graphe::afficher() {
+    std::cout << std::endl;
     for (unsigned int i = 0; i < noeuds.size(); i++) {
       for (unsigned int j = 0; j < noeuds[i]->voisins.size(); j++) {
+        std::cout << "tuile " << noeuds[i]->id.tuile << "   |   ";
         std::cout << noeuds[i]->id.site << " --";
         switch (noeuds[i]->voisins[j].direction) {
           case HAUT:
@@ -93,6 +95,7 @@ namespace MMaze {
         std::cout << "--> " << noeuds[i]->voisins[j].destination->id.site << std::endl;
       }
     }
+    std::cout << std::endl;    
   }
 
 }

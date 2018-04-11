@@ -95,4 +95,22 @@ namespace MMaze {
       ensemble_tuiles[i]->sauver_dans_fichier(ss.str());
     }
   }
+
+  void Plateau::afficher_tuiles() {
+    for (unsigned int i = 0; i < ensemble_tuiles.size(); i++) {
+      std::cout << "Tuile " << i;
+      ensemble_tuiles[i]->afficher();
+    }
+  }
+
+  void Plateau::afficher_tuiles_placees() {
+    for (unsigned int i = 0; i < tuiles_placees.size(); i++) {
+      std::cout << "Tuile " << tuiles_placees[i];
+      ensemble_tuiles[tuiles_placees[i]]->afficher();
+    }
+  }
+
+  void Plateau::afficher_graphe() {
+    g.afficher();
+  }
 }
