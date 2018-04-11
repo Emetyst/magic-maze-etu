@@ -206,10 +206,6 @@ namespace MMaze {
     detruire_murs();
   }
 
-  void Tuile::construire_graphe() {
-    
-  }
-
   void Tuile::rotation_gauche() {
     std::vector<Site> temp_sites;
     std::vector<bool> temp_murs;
@@ -230,8 +226,6 @@ namespace MMaze {
       temp_murs[i] = vec_murs[tmp_index];
     }
     vec_murs = temp_murs;
-
-    construire_graphe();
   }
 
   void Tuile::rotation_droite() {
@@ -254,8 +248,29 @@ namespace MMaze {
       temp_murs[i] = vec_murs[tmp_index];
     }
     vec_murs = temp_murs;
+  }
 
-    construire_graphe();
+  void Tuile::construire_graphe(Graphe& g) {
+    for (unsigned int i = 0; i < vec_sites.size(); i++) {
+      g.ajouter_noeud(new Noeud(id_tuile, i));
+    }
+    for (unsigned int i = 0; i < 12; i++) {
+      Mur m(i);
+      if (!mur(m)) {
+        Noeud* haut = g.index_noeud(IdNoeud(id_tuile, m[0].index()));
+        Noeud* bas = g.index_noeud(IdNoeud(id_tuile, m[1].index()));
+        g.connecter_voisins(haut, bas, BAS);
+      }
+    }
+    for (unsigned int i = 12; i < 24; i++) {
+      Mur m(i);
+      if (!mur(m)) {
+        Noeud* gauche = g.index_noeud(IdNoeud(id_tuile, m[0].index()));
+        Noeud* droite = g.index_noeud(IdNoeud(id_tuile, m[1].index()));
+        g.connecter_voisins(gauche, droite, DROITE);
+      }
+    }
+
   }
 
   /* ----------------------------------------------------------------------- */

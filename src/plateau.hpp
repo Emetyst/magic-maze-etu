@@ -11,7 +11,7 @@ namespace MMaze {
       Plateau();
       ~Plateau();
 
-      void etendre_plateau();
+      void etendre_plateau(IdNoeud id);
 
       void sauver_plateau_dans_dossier(std::string nom_dossier);
 
@@ -25,6 +25,7 @@ namespace MMaze {
       Melangeur* pioche_tuiles;
       std::vector<Tuile*> ensemble_tuiles;
       std::vector<int> tuiles_placees;
+      Graphe g;
  
       int piocher();
   };

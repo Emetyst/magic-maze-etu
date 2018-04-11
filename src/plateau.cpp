@@ -7,7 +7,9 @@ namespace MMaze {
     int id = 0;
 
     // Ajout tuile depart
-    ensemble_tuiles[id] = new Tuile(0, true);
+    ensemble_tuiles[id] = new Tuile(id, true);
+    tuiles_placees.push_back(id);
+    ensemble_tuiles[id]->construire_graphe(g);
     id++;
 
     Type tab_types[2] = { OBJECTIF, SORTIE };
@@ -32,6 +34,8 @@ namespace MMaze {
     for (int i = 1; i < MAX_TUILES; i++) {
       pioche_tuiles->inserer(&i);
     }
+
+    
   }
 
   Plateau::~Plateau() {
@@ -41,8 +45,40 @@ namespace MMaze {
     delete pioche_tuiles;
   }
 
-  void Plateau::etendre_plateau() {
-    tuiles_placees.push_back(piocher());
+  void Plateau::etendre_plateau(IdNoeud id) {
+    int indice_pioche = piocher();
+    tuiles_placees.push_back(indice_pioche);
+
+    Graphe new_g;
+    Direction direction_ext;
+    int case_entree;
+    switch (id.site) {
+      case 4:
+        direction_ext = GAUCHE;
+        case_entree = 11;
+        ensemble_tuiles[indice_pioche]->rotation_gauche();
+        break;
+      case 11:
+        direction_ext = DROITE;
+        case_entree = 4;
+        ensemble_tuiles[indice_pioche]->rotation_droite();
+        break;
+      case 13:
+        direction_ext = BAS;
+        case_entree = 2;
+        ensemble_tuiles[indice_pioche]->rotation_droite();
+        ensemble_tuiles[indice_pioche]->rotation_droite();
+        break;
+      default:
+        direction_ext = HAUT;
+        case_entree = 13;
+        break;
+    }
+    ensemble_tuiles[indice_pioche]->construire_graphe(new_g);
+    g.fusionner_graphe(new_g);
+    Noeud* n_sortie = g.index_noeud(id);
+    Noeud* n_entree = g.index_noeud(IdNoeud(indice_pioche, case_entree));
+    g.connecter_voisins(n_sortie, n_entree, direction_ext);
 
   }
 

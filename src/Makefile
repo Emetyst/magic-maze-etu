@@ -10,8 +10,9 @@ SOURCES += couleurs.cpp
 SOURCES += tuile.cpp
 SOURCES += direction.cpp
 SOURCES += site.cpp
-# SOURCES += graphe.cpp
-# SOURCES += noeud.cpp
+SOURCES += graphe.cpp
+SOURCES += noeud.cpp
+SOURCES += arete.cpp
 SOURCES += unionfind.cpp
 SOURCES += cellule.cpp
 SOURCES += liste.cpp
@@ -57,6 +58,21 @@ $(TUILE_OBJECTS): %.o : %.cpp
 all : test_tuile
 TARGETS += test_tuile
 CLEAN_OBJECTS += $(TUILE_OBJECTS)
+
+########## test_plateau ##########
+
+PLATEAU_SOURCES = test_plateau.cpp
+PLATEAU_OBJECTS = $(PLATEAU_SOURCES:.cpp=.o)
+
+test_plateau : $(PLATEAU_OBJECTS) $(OBJECTS) $(HEADERS)
+	$(CXX) $(PLATEAU_OBJECTS) $(OBJECTS) -o $@ $(LDFLAGS)
+	
+$(PLATEAU_OBJECTS): %.o : %.cpp
+	$(CXX) -MMD $(CXXFLAGS) -c $< -o $@
+
+all : test_plateau
+TARGETS += test_plateau
+CLEAN_OBJECTS += $(PLATEAU_OBJECTS)
 
 ########## test_liste ##########
 

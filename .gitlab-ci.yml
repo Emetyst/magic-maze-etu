@@ -38,3 +38,40 @@ tuile-test:
     - valgrind --leak-check=full --error-exitcode=1 src/test_tuile
   dependencies:
     - tuile-build
+
+########## plateau ##########
+
+plateau-build:
+  stage: build
+  script:
+    - cd src
+    - make test_plateau
+  artifacts:
+    paths:
+      - src/test_plateau
+
+plateau-test:
+  stage: test
+  script:
+    - valgrind --leak-check=full --error-exitcode=1 src/test_plateau
+  dependencies:
+    - plateau-build
+
+########## liste ##########
+
+list-build:
+  stage: build
+  script:
+    - cd src
+    - make test_liste
+  artifacts:
+    paths:
+      - src/test_liste
+
+list-test:
+  stage: test
+  script:
+    - valgrind --leak-check=full --error-exitcode=1 src/test_liste
+  dependencies:
+    - list-build
+

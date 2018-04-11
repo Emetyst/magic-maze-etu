@@ -7,6 +7,7 @@
 #include "liste.hpp"
 #include "unionfind.hpp"
 #include "direction.hpp"
+#include "graphe.hpp"
 
 #include <fstream>
 #include <string>
@@ -23,7 +24,7 @@ namespace MMaze {
       void placer_autre_site(const Type & t, const Couleur & c);
       void rotation_gauche();
       void rotation_droite();
-      void construire_graphe();
+      void construire_graphe(Graphe& g);
       bool mur(Mur m) const; //indique si deux cases voisines sont separees par un mur
       bool accessible(Case c); //indique si une case est accessible depuis les portes ou non
       friend std::ostream& operator<<(std::ostream& out, const Tuile& t); //affichage
