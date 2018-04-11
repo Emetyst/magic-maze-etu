@@ -26,8 +26,12 @@ namespace MMaze {
       std::vector<Tuile*> ensemble_tuiles;
       std::vector<int> tuiles_placees;
       Graphe g;
+
+      std::vector<bool> objectifs_trouves;
+      std::vector<bool> sorties_trouvees;
  
       int piocher();
+      void check_objectif(int indice_pioche);
   };
 }
 

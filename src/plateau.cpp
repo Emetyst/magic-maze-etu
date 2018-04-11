@@ -2,6 +2,8 @@
 
 namespace MMaze {
   Plateau::Plateau() {
+    objectifs_trouves.resize(4, false);
+    sorties_trouvees.resize(4, false);
     int MAX_TUILES = 24;
     ensemble_tuiles.resize(MAX_TUILES, nullptr);
     int id = 0;
@@ -80,12 +82,7 @@ namespace MMaze {
     Noeud* n_entree = g.index_noeud(IdNoeud(indice_pioche, case_entree));
     g.connecter_voisins(n_sortie, n_entree, direction_ext);
 
-  }
-
-  int Plateau::piocher() {
-    int pioche;
-    pioche_tuiles->retirer(&pioche);
-    return pioche;
+    check_objectif(indice_pioche);
   }
 
   void Plateau::sauver_plateau_dans_dossier(std::string nom_dossier) {
@@ -113,4 +110,48 @@ namespace MMaze {
   void Plateau::afficher_graphe() {
     g.afficher();
   }
+
+  /* --------------------------------------------------------- */
+
+  int Plateau::piocher() {
+    int pioche;
+    pioche_tuiles->retirer(&pioche);
+    return pioche;
+  }
+
+  void Plateau::check_objectif(int indice_pioche) {
+    int site = ensemble_tuiles[indice_pioche]->contient_objectif();
+    if (site != -1) {
+      Type t = ensemble_tuiles[indice_pioche]->vec_sites[site].type;
+      Couleur c = ensemble_tuiles[indice_pioche]->vec_sites[site].couleur;
+      std::cout << std::endl;
+      switch (c) {
+        case JAUNE:
+          std::cout << TXT_JAUNE;
+          break;
+        case VIOLET:
+          std::cout << TXT_VIOLET;
+          break;
+        case VERT:
+          std::cout << TXT_VERT;
+          break;
+        case ORANGE:
+          std::cout << TXT_ORANGE;
+          break;
+        default:
+          std::cout << TXT_BOLD;
+          break;
+      }
+      if (t == OBJECTIF) {
+        std::cout << "OBJECTIF ";
+        objectifs_trouves[indice_couleur(c)] = true;
+      } else if (t == SORTIE) {
+        std::cout << "SORTIE ";
+        sorties_trouvees[indice_couleur(c)] = true;
+      }
+      std::cout << TXT_CLEAR << "trouvé !" << std::endl;
+    }
+
+  }
+
 }

@@ -18,7 +18,7 @@ int main() {
 
   std::cout << std::endl;
 
-  p.afficher_graphe();
+//   p.afficher_graphe();
   
 //   p.sauver_plateau_dans_dossier("../assets/plateau/");
 

@@ -2,6 +2,28 @@
 
 namespace MMaze {
 
+  int indice_couleur(Couleur c) {
+    int res;
+    switch (c) {
+      case VIOLET:
+        res = 0;
+        break;
+      case ORANGE:
+        res = 1;
+        break;
+      case JAUNE:
+        res = 2;
+        break;
+      case VERT:
+        res = 3;
+        break;
+      default:
+        res = -1;
+        break;
+    }
+    return res;
+  }
+
   const char* TXT_CLEAR = "\x1B[0m";
   const char* TXT_BOLD = "\x1B[1m";
   const char* TXT_DEFAULT = "\x1B[39m";

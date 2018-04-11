@@ -11,6 +11,8 @@ namespace MMaze {
     VIOLET
   };
 
+  int indice_couleur(Couleur c);
+
   extern const char* TXT_CLEAR;
   extern const char* TXT_BOLD;
   extern const char* TXT_DEFAULT;

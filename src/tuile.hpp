@@ -29,11 +29,13 @@ namespace MMaze {
       bool accessible(Case c); //indique si une case est accessible depuis les portes ou non
       friend std::ostream& operator<<(std::ostream& out, const Tuile& t); //affichage
       void afficher();
+      int contient_objectif();
 
-    private:
       std::vector<Site> vec_sites;
       std::vector<bool> vec_murs;
       int id_tuile;
+
+    private:
       UnionFind classes_cases;
 
       void detruire_murs();

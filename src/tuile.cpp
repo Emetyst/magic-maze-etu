@@ -273,6 +273,13 @@ namespace MMaze {
 
   }
 
+  int Tuile::contient_objectif() {
+    for (unsigned int i = 0; i < vec_sites.size(); i++) {
+      if (vec_sites[i].type == OBJECTIF || vec_sites[i].type == SORTIE) return i;
+    }
+    return -1;
+  }
+
   /* ----------------------------------------------------------------------- */
 
   void Tuile::modifier_site(unsigned int pos, const Type & t, const Couleur & c) {
