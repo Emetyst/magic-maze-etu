@@ -2,6 +2,8 @@ CXX      = g++
 
 .DEFAULT_GOAL := all
 
+BINOME=11409933_11512256
+
 SOURCES = 
 SOURCES += melangeur.cpp
 SOURCES += case.cpp
@@ -96,3 +98,10 @@ clean:
 	@rm -f $(DEPS) $(TARGETS) $(CLEAN_OBJECTS)
 
 -include $(DEPS)
+
+archive:
+	mkdir ../rendu
+	cp -r ../assets ../src ../README.md ../rendu
+	tar -cvf ../rendu_$(BINOME).tar ../rendu
+	gzip ../rendu_$(BINOME).tar
+	rm -r ../rendu
