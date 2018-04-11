@@ -19,6 +19,9 @@ SOURCES += unionfind.cpp
 SOURCES += cellule.cpp
 SOURCES += liste.cpp
 SOURCES += plateau.cpp
+SOURCES += cell.cpp
+SOURCES += file-prio.cpp
+SOURCES += skip-list.cpp
 
 OBJECTS = $(SOURCES:.cpp=.o)
 
